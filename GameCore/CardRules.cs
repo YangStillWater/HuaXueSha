@@ -8,20 +8,24 @@ namespace GameCore
 {
     public class CardRules
     {
-        public static bool IsDefensible(enumCard offender,enumCard defender)
+        private GameContext _gctx;
+        public CardRules(GameContext context)
         {
-            switch (offender)
+            _gctx = context;
+        }
+        public void DealAcid()
+        {
+            foreach (var t in _gctx.targets)
             {
-                case enumCard.Acid:
-                    if (defender == enumCard.Base) return true;
-                    break;
-                case enumCard.Base:
-                    if (defender == enumCard.Acid) return true;
-                    break;
-                default:
-                    break;
+                t.Blood--;
             }
-            return false;
+        }
+        public void DealBase()
+        {
+            foreach (var t in _gctx.targets)
+            {
+                t.Blood--;
+            }
         }
     }
 }

@@ -11,11 +11,11 @@ namespace HuaXueSha
     {
         public GameContextConsole()
         {
-            BeginPrepareCards += delegate
+            OnBeginPrepareCards += delegate
             {
                 Console.WriteLine("begin prepare cards");
             };
-            EndPrepareCards += delegate
+            OnEndPrepareCards += delegate
             {
                 Console.WriteLine("end prepare cards");
             };

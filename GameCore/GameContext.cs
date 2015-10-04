@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using YangPeng.Extensions;
 
@@ -22,11 +23,19 @@ namespace GameCore
         public Card currentCard;
         public List<Player> targets = new List<Player>();
 
-        public event EventHandler<EventArgs> BeginPrepareCards;
-        public event EventHandler<EventArgs> EndPrepareCards;
+        public event EventHandler<EventArgs> OnBeginPrepareCards;
+        public event EventHandler<EventArgs> OnEndPrepareCards;
         public event EventHandler<EventArgs> OnGameOver;
+        public event EventHandler<EventArgs> OnBeginDealCard;
+        public event EventHandler<EventArgs> OnEndDealCard;
+        public event EventHandler<EventArgs> OnBeginSetTarget;
+        public event EventHandler<EventArgs> OnEndSetTarget;
+        public event EventHandler<EventArgs> OnBloodDrop;
 
         public int round = 1;//第几轮
+        AutoResetEvent autoEvent = new AutoResetEvent(false);
+
+        public CardRules Rules;
 
         public GameContext()
         {
@@ -64,26 +73,28 @@ namespace GameCore
             players.Add(new Player() { name = "A" });
             players.Add(new Player() { name = "B" });
             #endregion
+
+            Rules = new CardRules(this);
         }
         public void GameBegin()
         {
-            BeginPrepareCards(this, new EventArgs());
+            OnBeginPrepareCards(this, new EventArgs());
             //给每个玩家发牌
             foreach (var player in players)
             {
                 player.Cards.AddRange(availableCards.TakeRandom(player.CardCountWhenBegin));
             }
-            EndPrepareCards(this, new EventArgs());
+            OnEndPrepareCards(this, new EventArgs());
         }
         public void RoundBegin()
         {
-            BeginPrepareCards(this, new EventArgs());
+            OnBeginPrepareCards(this, new EventArgs());
             //给每个玩家发牌
             foreach (var player in players)
             {
                 player.Cards.AddRange(availableCards.TakeRandom(player.CardCountWhenBegin));
             }
-            EndPrepareCards(this, new EventArgs());
+            OnEndPrepareCards(this, new EventArgs());
         }
         public void TurnToFirstPlayer()
         {
@@ -123,11 +134,43 @@ namespace GameCore
         }
         public void DealCard()
         {
+            OnBeginDealCard(this, new EventArgs());
+            if (autoEvent.WaitOne(15000, false))
+            {
+                OnEndDealCard(this, new EventArgs());
+            }
+            else
+            {
+                throw new TimeOutException();
+            }
 
         }
-        public void SetTarget()
+        public void DealOneCard(int cardIndex)
         {
-
+            currentCard = currentPlayer.Cards[cardIndex];
+            currentPlayer.Cards.Remove(currentCard);
+            droppedCards.Add(currentCard);
+            autoEvent.Set();
+        }
+        public void SetTargets()
+        {
+            OnBeginDealCard(this, new EventArgs());
+            if (autoEvent.WaitOne(15000, false))
+            {
+                OnEndDealCard(this, new EventArgs());
+            }
+            else
+            {
+                throw new TimeOutException();
+            }
+        }
+        public void SetTheTargets(int[] playerIndexes)
+        {
+            foreach (int i in playerIndexes)
+            {
+                targets.Add(players[i]);
+            }
+            autoEvent.Set();
         }
         public void DropCard()
         {

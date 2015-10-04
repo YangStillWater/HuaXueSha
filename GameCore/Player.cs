@@ -30,42 +30,5 @@ namespace GameCore
             Cards.Remove(killingCard);
             return true;
         }
-        //public bool Defend(Card defendCard)
-        //{
-        //    if (CardRules.IsDefensible(InvadingCard,defendCard))
-        //    {
-        //        Console.WriteLine("defend success");
-        //        Cards.Remove(defendCard);
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("cannot defend");
-        //        return false;
-        //    }
-        //}
-        //public void Abandon()
-        //{
-        //    switch (InvadingCard)
-        //    {
-        //        case enumCard.Acid:
-        //        case enumCard.Base:
-        //            Blood--;
-        //            Console.WriteLine(this.name + "drop 1 blood,current blood is " + Blood);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-        ///// <summary>
-        ///// 选择要出的牌
-        ///// </summary>
-        ///// <returns></returns>
-        //public enumCard GetCard()
-        //{
-        //    Console.WriteLine("input the index of the card:" + string.Join(",",Cards));
-        //    string s = Console.ReadLine();
-        //    return Cards[Convert.ToInt32(s)];
-        //}
     }
 }
