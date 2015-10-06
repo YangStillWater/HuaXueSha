@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGameBegin = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblSelectTarget = new System.Windows.Forms.Label();
+            this.lblSelectCard = new System.Windows.Forms.Label();
+            this.btnDealCard = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,15 +49,15 @@
             this.listBox1.Size = new System.Drawing.Size(601, 100);
             this.listBox1.TabIndex = 0;
             // 
-            // button1
+            // btnGameBegin
             // 
-            this.button1.Location = new System.Drawing.Point(660, 59);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "开始游戏";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnGameBegin.Location = new System.Drawing.Point(660, 59);
+            this.btnGameBegin.Name = "btnGameBegin";
+            this.btnGameBegin.Size = new System.Drawing.Size(75, 23);
+            this.btnGameBegin.TabIndex = 4;
+            this.btnGameBegin.Text = "开始游戏";
+            this.btnGameBegin.UseVisualStyleBackColor = true;
+            this.btnGameBegin.Click += new System.EventHandler(this.btnGameBegin_Click);
             // 
             // label1
             // 
@@ -85,33 +86,44 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.lblSelectTarget);
+            this.panel1.Controls.Add(this.lblSelectCard);
+            this.panel1.Controls.Add(this.btnDealCard);
             this.panel1.Location = new System.Drawing.Point(660, 153);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(169, 100);
             this.panel1.TabIndex = 9;
             this.panel1.Visible = false;
             // 
-            // button2
+            // lblSelectTarget
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(13, 70);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "出牌";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.lblSelectTarget.AutoSize = true;
+            this.lblSelectTarget.Location = new System.Drawing.Point(13, 41);
+            this.lblSelectTarget.Name = "lblSelectTarget";
+            this.lblSelectTarget.Size = new System.Drawing.Size(65, 12);
+            this.lblSelectTarget.TabIndex = 1;
+            this.lblSelectTarget.Text = "请选择目标";
+            this.lblSelectTarget.Visible = false;
             // 
-            // label3
+            // lblSelectCard
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 12);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "请选择一张牌";
+            this.lblSelectCard.AutoSize = true;
+            this.lblSelectCard.Location = new System.Drawing.Point(11, 15);
+            this.lblSelectCard.Name = "lblSelectCard";
+            this.lblSelectCard.Size = new System.Drawing.Size(77, 12);
+            this.lblSelectCard.TabIndex = 1;
+            this.lblSelectCard.Text = "请选择一张牌";
+            // 
+            // btnDealCard
+            // 
+            this.btnDealCard.Enabled = false;
+            this.btnDealCard.Location = new System.Drawing.Point(13, 70);
+            this.btnDealCard.Name = "btnDealCard";
+            this.btnDealCard.Size = new System.Drawing.Size(75, 23);
+            this.btnDealCard.TabIndex = 0;
+            this.btnDealCard.Text = "出牌";
+            this.btnDealCard.UseVisualStyleBackColor = true;
+            this.btnDealCard.Click += new System.EventHandler(this.btnDealCard_Click);
             // 
             // Form1
             // 
@@ -122,7 +134,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGameBegin);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -136,13 +148,14 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGameBegin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label lblSelectCard;
+        private System.Windows.Forms.Button btnDealCard;
+        private System.Windows.Forms.Label lblSelectTarget;
     }
 }
 

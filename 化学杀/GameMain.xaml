@@ -101,26 +101,26 @@
                                 <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_17">
                                   <TryCatch DisplayName="出牌阶段" sap2010:WorkflowViewState.IdRef="TryCatch_2">
                                     <TryCatch.Try>
-                                      <While DisplayName="当还有牌则可以出牌" sap2010:WorkflowViewState.IdRef="While_1">
+                                      <While DisplayName="当还有牌则可以出牌" sap2010:WorkflowViewState.IdRef="While_2">
                                         <While.Condition>
                                           <mca:CSharpValue x:TypeArguments="x:Boolean">ctx.currentPlayer.Cards.Count &gt; 0</mca:CSharpValue>
                                         </While.Condition>
-                                        <Sequence DisplayName="出牌" sap2010:WorkflowViewState.IdRef="Sequence_2">
-                                          <InvokeMethod DisplayName="出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_15" MethodName="DealCard">
+                                        <Sequence DisplayName="出牌" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                          <InvokeMethod DisplayName="选择一张牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_23" MethodName="SelectOneCard">
                                             <InvokeMethod.TargetObject>
                                               <InArgument x:TypeArguments="g:GameContext">
                                                 <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
                                               </InArgument>
                                             </InvokeMethod.TargetObject>
                                           </InvokeMethod>
-                                          <If DisplayName="是否需要指定目标" sap2010:WorkflowViewState.IdRef="If_1">
+                                          <If DisplayName="是否需要指定目标" sap2010:WorkflowViewState.IdRef="If_2">
                                             <If.Condition>
                                               <InArgument x:TypeArguments="x:Boolean">
                                                 <mca:CSharpValue x:TypeArguments="x:Boolean">ctx.currentCard.IsNeedTarget</mca:CSharpValue>
                                               </InArgument>
                                             </If.Condition>
                                             <If.Then>
-                                              <InvokeMethod DisplayName="指定出牌目标" sap2010:WorkflowViewState.IdRef="InvokeMethod_16" MethodName="SetTargets">
+                                              <InvokeMethod DisplayName="指定出牌目标" sap2010:WorkflowViewState.IdRef="InvokeMethod_24" MethodName="SetTargets">
                                                 <InvokeMethod.TargetObject>
                                                   <InArgument x:TypeArguments="g:GameContext">
                                                     <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
@@ -129,20 +129,28 @@
                                               </InvokeMethod>
                                             </If.Then>
                                           </If>
-                                          <Switch x:TypeArguments="x:String" DisplayName="出牌结果" sap2010:WorkflowViewState.IdRef="Switch`1_3">
+                                          <InvokeMethod DisplayName="出牌" MethodName="DealOneCard">
+                                            <InvokeMethod.TargetObject>
+                                              <InArgument x:TypeArguments="g:GameContext">
+                                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                              </InArgument>
+                                            </InvokeMethod.TargetObject>
+                                            <sap2010:WorkflowViewState.IdRef>InvokeMethod_27</sap2010:WorkflowViewState.IdRef>
+                                          </InvokeMethod>
+                                          <Switch x:TypeArguments="x:String" DisplayName="出牌结果" sap2010:WorkflowViewState.IdRef="Switch`1_4">
                                             <Switch.Expression>
                                               <InArgument x:TypeArguments="x:String">
                                                 <mca:CSharpValue x:TypeArguments="x:String">ctx.currentCard.GetType().Name</mca:CSharpValue>
                                               </InArgument>
                                             </Switch.Expression>
-                                            <InvokeMethod x:Key="&quot;Acid&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_19" MethodName="DealOffence">
+                                            <InvokeMethod x:Key="&quot;Acid&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_25" MethodName="DealOffence">
                                               <InvokeMethod.TargetObject>
                                                 <InArgument x:TypeArguments="g:CardRules">
                                                   <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
                                                 </InArgument>
                                               </InvokeMethod.TargetObject>
                                             </InvokeMethod>
-                                            <InvokeMethod x:Key="&quot;Base&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_20" MethodName="DealOffence">
+                                            <InvokeMethod x:Key="&quot;Base&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_26" MethodName="DealOffence">
                                               <InvokeMethod.TargetObject>
                                                 <InArgument x:TypeArguments="g:CardRules">
                                                   <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
@@ -161,13 +169,12 @@
                                           </ActivityAction.Argument>
                                         </ActivityAction>
                                       </Catch>
-                                      <Catch x:TypeArguments="g:FinishDealCardsException">
+                                      <Catch x:TypeArguments="g:FinishDealCardsException" sap2010:WorkflowViewState.IdRef="Catch`1_5">
                                         <ActivityAction x:TypeArguments="g:FinishDealCardsException">
                                           <ActivityAction.Argument>
                                             <DelegateInArgument x:TypeArguments="g:FinishDealCardsException" Name="exception" />
                                           </ActivityAction.Argument>
                                         </ActivityAction>
-                                        <sap2010:WorkflowViewState.IdRef>Catch`1_5</sap2010:WorkflowViewState.IdRef>
                                       </Catch>
                                     </TryCatch.Catches>
                                   </TryCatch>
@@ -256,7 +263,7 @@
         </InvokeMethod>
       </TryCatch.Finally>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sJzADhAIOAgEBMQWCAhACAQIzCecBFQIBCvoBCYACGAIBB+8BDfUBHAIBAzkPPx4CAUVCE0giAgFBSxdRJgIBPVQbWioCATldH2MuAgE1ZiOtAS4CARewASe2ATYCARO5ASu/AToCAQ/CAS/IAT4CAQv9AQ/9AVUCAQjyARPyAVkCAQQ8FTxbAgFGRRlFXwIBQk4dTmMCAT5XIVdnAgE6YCVgawIBNmgnmgEvAgEYswEtswFzAgEUvAExvAF3AgEQxQE1xQF7AgEMbCmZATQCARxqK2qOAQIBGW0rczoCATF0K4MBMAIBKYQBK5gBNAIBHXAxcHcCATJ3MXeMAQIBKnsvgQE+AgEthwExhwGNAQIBHooBLZABPAIBJZEBLZcBPAIBIX41fnsCAS6NATONAX0CASaUATOUAX0CASI=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sKTADiwIOAgEBMQWJAhACAQIzCe4BFQIBCoECCYcCGAIBB/YBDfwBHAIBAzkPPx4CAUlCE0giAgFFSxdRJgIBQVQbWioCAT1dH2MuAgE5ZiO0AS4CARe3ASe9ATYCARPAASvGAToCAQ/JAS/PAT4CAQuEAg+EAlUCAQj5ARP5AVkCAQQ8FTxbAgFKRRlFXwIBRk4dTmMCAUJXIVdnAgE+YCVgawIBOmgnogEvAgEYugEtugFzAgEUwwExwwF3AgEQzAE1zAF7AgEMbCmhATQCARxqK2qOAQIBGW0rczoCATV0K4MBMAIBLYQBK4sBOgIBKYwBK6ABNAIBHXAxcHcCATZ3MXeMAQIBLnsvgQE+AgExhwExhwF3AgEqjwExjwGNAQIBHpIBLZgBPAIBJZkBLZ8BPAIBIX41fnsCATKVATOVAX0CASacATOcAX0CASI=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -295,32 +302,33 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_15" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_23" sap:VirtualizedContainerService.HintSize="484,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_16" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_24" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="225,53" />
-      <sap2010:ViewStateData Id="InvokeMethod_19" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="InvokeMethod_20" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="Switch`1_3" sap:VirtualizedContainerService.HintSize="225,53" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="247,443">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="484,286" />
+      <sap2010:ViewStateData Id="InvokeMethod_27" sap:VirtualizedContainerService.HintSize="484,133" />
+      <sap2010:ViewStateData Id="InvokeMethod_25" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="InvokeMethod_26" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="Switch`1_4" sap:VirtualizedContainerService.HintSize="484,631" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="506,1427">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="464,223" />
+      <sap2010:ViewStateData Id="While_2" sap:VirtualizedContainerService.HintSize="532,1590" />
       <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="404,23">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -337,7 +345,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,321">
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="550,1955">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -492,7 +500,8 @@
       <sap2010:ViewStateData Id="HuaXueSha.GameMain_1" sap:VirtualizedContainerService.HintSize="262,257">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+            <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>

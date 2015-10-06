@@ -26,12 +26,14 @@ namespace GameCore
         public event EventHandler<EventArgs> OnBeginPrepareCards;
         public event EventHandler<EventArgs> OnEndPrepareCards;
         public event EventHandler<EventArgs> OnEndGetCards;
-        public event EventHandler<EventArgs> OnGameOver;
-        public event EventHandler<EventArgs> OnBeginDealCard;
-        public event EventHandler<EventArgs> OnEndDealCard;
+        public event EventHandler<EventArgs> OnBeginSelectOneCard;
+        public event EventHandler<EventArgs> OnEndSelectOneCard;
         public event EventHandler<EventArgs> OnBeginSetTarget;
         public event EventHandler<EventArgs> OnEndSetTarget;
+        public event EventHandler<EventArgs> OnBeginDealCard;
+        public event EventHandler<EventArgs> OnEndDealCard;
         public event EventHandler<EventArgs> OnBloodDrop;
+        public event EventHandler<EventArgs> OnGameOver;
 
         public int round = 1;//第几轮
         public AutoResetEvent autoEvent = new AutoResetEvent(false);
@@ -116,7 +118,7 @@ namespace GameCore
         {
             for (int i = 0; i < currentPlayer.CardCountToGet; i++)
             {
-                if (availableCards.Count==0)
+                if (availableCards.Count == 0)
                 {
                     RecycleCards();
                 }
@@ -124,32 +126,29 @@ namespace GameCore
             }
             OnEndGetCards(this, new EventArgs());
         }
-        public void DealCard()
+        public void SelectOneCard()
         {
-            OnBeginDealCard(this, new EventArgs());
+            OnBeginSelectOneCard(this, new EventArgs());
             if (autoEvent.WaitOne(15000, false))
             {
-                OnEndDealCard(this, new EventArgs());
+                OnEndSelectOneCard(this, new EventArgs());
             }
             else
             {
                 throw new TimeOutException();
             }
-
         }
-        public void DealOneCard(int cardIndex)
+        public void SelectThisOneCard(int cardIndex)
         {
             currentCard = currentPlayer.Cards[cardIndex];
-            currentPlayer.Cards.Remove(currentCard);
-            droppedCards.Add(currentCard);
             autoEvent.Set();
         }
         public void SetTargets()
         {
-            OnBeginDealCard(this, new EventArgs());
+            OnBeginSetTarget(this, new EventArgs());
             if (autoEvent.WaitOne(15000, false))
             {
-                OnEndDealCard(this, new EventArgs());
+                OnEndSetTarget(this, new EventArgs());
             }
             else
             {
@@ -162,6 +161,24 @@ namespace GameCore
             {
                 targets.Add(players[i]);
             }
+            autoEvent.Set();
+        }
+        public void DealOneCard()
+        {
+            OnBeginDealCard(this, new EventArgs());
+            if (autoEvent.WaitOne(15000, false))
+            {
+                //OnEndDealCard(this, new EventArgs());
+            }
+            else
+            {
+                throw new TimeOutException();
+            }
+        }
+        public void DealThisOneCard(int cardIndex)
+        {
+            currentPlayer.Cards.Remove(currentCard);
+            droppedCards.Add(currentCard);
             autoEvent.Set();
         }
         public void DropCard()
