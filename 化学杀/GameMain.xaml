@@ -135,14 +135,14 @@
                                                 <mca:CSharpValue x:TypeArguments="x:String">ctx.currentCard.GetType().Name</mca:CSharpValue>
                                               </InArgument>
                                             </Switch.Expression>
-                                            <InvokeMethod x:Key="&quot;Acid&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_19" MethodName="DealAcid">
+                                            <InvokeMethod x:Key="&quot;Acid&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_19" MethodName="DealOffence">
                                               <InvokeMethod.TargetObject>
                                                 <InArgument x:TypeArguments="g:CardRules">
                                                   <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
                                                 </InArgument>
                                               </InvokeMethod.TargetObject>
                                             </InvokeMethod>
-                                            <InvokeMethod x:Key="&quot;Base&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_20" MethodName="DealBase">
+                                            <InvokeMethod x:Key="&quot;Base&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_20" MethodName="DealOffence">
                                               <InvokeMethod.TargetObject>
                                                 <InArgument x:TypeArguments="g:CardRules">
                                                   <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
@@ -160,6 +160,14 @@
                                             <DelegateInArgument x:TypeArguments="g:TimeOutException" Name="exception" />
                                           </ActivityAction.Argument>
                                         </ActivityAction>
+                                      </Catch>
+                                      <Catch x:TypeArguments="g:FinishDealCardsException">
+                                        <ActivityAction x:TypeArguments="g:FinishDealCardsException">
+                                          <ActivityAction.Argument>
+                                            <DelegateInArgument x:TypeArguments="g:FinishDealCardsException" Name="exception" />
+                                          </ActivityAction.Argument>
+                                        </ActivityAction>
+                                        <sap2010:WorkflowViewState.IdRef>Catch`1_5</sap2010:WorkflowViewState.IdRef>
                                       </Catch>
                                     </TryCatch.Catches>
                                   </TryCatch>
@@ -248,7 +256,7 @@
         </InvokeMethod>
       </TryCatch.Finally>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sJzAD/AEOAgEBMQX6ARACAQIzCd8BFQIBCvIBCfgBGAIBB+cBDe0BHAIBAzkPPx4CAUVCE0giAgFBSxdRJgIBPVQbWioCATldH2MuAgE1ZiOlAS4CAReoASeuATYCAROxASu3AToCAQ+6AS/AAT4CAQv1AQ/1AVUCAQjqARPqAVkCAQQ8FTxbAgFGRRlFXwIBQk4dTmMCAT5XIVdnAgE6YCVgawIBNmgnmgEvAgEYqwEtqwFzAgEUtAExtAF3AgEQvQE1vQF7AgEMbCmZATQCARxqK2qOAQIBGW0rczoCATF0K4MBMAIBKYQBK5gBNAIBHXAxcHcCATJ3MXeMAQIBKnsvgQE+AgEthwExhwGNAQIBHooBLZABPAIBJZEBLZcBPAIBIX41fnsCAS6NATONAX0CASaUATOUAX0CASI=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sJzADhAIOAgEBMQWCAhACAQIzCecBFQIBCvoBCYACGAIBB+8BDfUBHAIBAzkPPx4CAUVCE0giAgFBSxdRJgIBPVQbWioCATldH2MuAgE1ZiOtAS4CARewASe2ATYCARO5ASu/AToCAQ/CAS/IAT4CAQv9AQ/9AVUCAQjyARPyAVkCAQQ8FTxbAgFGRRlFXwIBQk4dTmMCAT5XIVdnAgE6YCVgawIBNmgnmgEvAgEYswEtswFzAgEUvAExvAF3AgEQxQE1xQF7AgEMbCmZATQCARxqK2qOAQIBGW0rczoCATF0K4MBMAIBKYQBK5gBNAIBHXAxcHcCATJ3MXeMAQIBKnsvgQE+AgEthwExhwGNAQIBHooBLZABPAIBJZEBLZcBPAIBIX41fnsCAS6NATONAX0CASaUATOUAX0CASI=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -304,7 +312,7 @@
       <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="225,53" />
       <sap2010:ViewStateData Id="InvokeMethod_19" sap:VirtualizedContainerService.HintSize="225,133" />
       <sap2010:ViewStateData Id="InvokeMethod_20" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="Switch`1_3" sap:VirtualizedContainerService.HintSize="484,348" />
+      <sap2010:ViewStateData Id="Switch`1_3" sap:VirtualizedContainerService.HintSize="225,53" />
       <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="247,443">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -321,7 +329,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,297">
+      <sap2010:ViewStateData Id="Catch`1_5" sap:VirtualizedContainerService.HintSize="404,23">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,321">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>

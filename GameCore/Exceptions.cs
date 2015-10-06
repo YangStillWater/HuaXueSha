@@ -9,6 +9,9 @@ namespace GameCore
     public class TimeOutException : Exception
     {
     }
+    public class FinishDealCardsException : Exception
+    {
+    }
     public class GameOverException : Exception
     {
     }

@@ -80,6 +80,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameCore\GameCore.csproj">
+      <Project>{2cab8225-36d3-4eac-9dd0-f9c9c92656b0}</Project>
+      <Name>GameCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YangPeng.Extensions\YangPeng.Extensions.csproj">
+      <Project>{4e7e6444-2df7-423e-8e05-b36f74abbf5d}</Project>
+      <Name>YangPeng.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\化学杀\HuaXueSha.csproj">
+      <Project>{97b48e1f-1428-419b-a016-6c770102c0bf}</Project>
+      <Name>HuaXueSha</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

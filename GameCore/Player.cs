@@ -19,16 +19,5 @@ namespace GameCore
         public int CardCountToGet = 2;
 
         public Character Character { get; set; }
-        /// <summary>
-        /// 出牌
-        /// </summary>
-        /// <param name="target">向谁出牌</param>
-        /// <param name="killingCard">出的牌</param>
-        /// <returns>是否出牌成功</returns>
-        public bool Offend(Player target, Card killingCard)
-        {
-            Cards.Remove(killingCard);
-            return true;
-        }
-    }
+   }
 }

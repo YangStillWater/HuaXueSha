@@ -8,24 +8,68 @@ namespace GameCore
 {
     public class CardRules
     {
+        public event EventHandler<EventArgs> OnBeginDefend;
+        public event EventHandler<EventArgs> OnEndDefend;
+
         private GameContext _gctx;
+
+        public Player currentTarget;
+        public Card offenderCard;
+        public Card defenderCard;
+
         public CardRules(GameContext context)
         {
             _gctx = context;
         }
-        public void DealAcid()
+        public void DealOffence()
         {
+            offenderCard = _gctx.currentCard;
             foreach (var t in _gctx.targets)
             {
-                t.Blood--;
+                currentTarget = t;
+                if (!Defend())
+                {
+                    t.Blood--; 
+                }
             }
         }
-        public void DealBase()
+        public bool Defend()
         {
-            foreach (var t in _gctx.targets)
+            OnBeginDefend(this, new EventArgs());
+            if (_gctx.autoEvent.WaitOne(15000, false))
             {
-                t.Blood--;
+                OnEndDefend(this, new EventArgs());
+                return true;
             }
+            else
+            {
+                OnEndDefend(this, new EventArgs());
+                return false;
+            }
+        }
+
+        public void DefendDone(int cardIndex)
+        {
+            defenderCard = currentTarget.Cards[cardIndex];
+            if (CanDefend(offenderCard,defenderCard))
+            {
+                currentTarget.Cards.Remove(defenderCard);
+                _gctx.droppedCards.Add(defenderCard);
+                _gctx.autoEvent.Set();
+            }
+        }
+
+        public bool CanDefend(Card offender,Card defender)
+        {
+            if (offender.GetType()==typeof(Acid))
+            {
+                return defender.GetType() == typeof(Base);
+            }
+            if (offender.GetType()==typeof(Base))
+            {
+                return defender.GetType() == typeof(Acid);
+            }
+            return false;
         }
     }
 }

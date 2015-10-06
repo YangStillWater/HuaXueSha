@@ -25,6 +25,7 @@ namespace GameCore
 
         public event EventHandler<EventArgs> OnBeginPrepareCards;
         public event EventHandler<EventArgs> OnEndPrepareCards;
+        public event EventHandler<EventArgs> OnEndGetCards;
         public event EventHandler<EventArgs> OnGameOver;
         public event EventHandler<EventArgs> OnBeginDealCard;
         public event EventHandler<EventArgs> OnEndDealCard;
@@ -33,7 +34,7 @@ namespace GameCore
         public event EventHandler<EventArgs> OnBloodDrop;
 
         public int round = 1;//第几轮
-        AutoResetEvent autoEvent = new AutoResetEvent(false);
+        public AutoResetEvent autoEvent = new AutoResetEvent(false);
 
         public CardRules Rules;
 
@@ -86,16 +87,6 @@ namespace GameCore
             }
             OnEndPrepareCards(this, new EventArgs());
         }
-        public void RoundBegin()
-        {
-            OnBeginPrepareCards(this, new EventArgs());
-            //给每个玩家发牌
-            foreach (var player in players)
-            {
-                player.Cards.AddRange(availableCards.TakeRandom(player.CardCountWhenBegin));
-            }
-            OnEndPrepareCards(this, new EventArgs());
-        }
         public void TurnToFirstPlayer()
         {
             currentPlayer = players.First();
@@ -131,6 +122,7 @@ namespace GameCore
                 }
                 currentPlayer.Cards.Add(availableCards.TakeRandom());
             }
+            OnEndGetCards(this, new EventArgs());
         }
         public void DealCard()
         {
