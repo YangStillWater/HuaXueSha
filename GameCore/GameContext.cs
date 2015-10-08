@@ -170,7 +170,7 @@ namespace GameCore
             OnBeginDealCard(this, new EventArgs());
             if (autoEvent.WaitOne(15000, false))
             {
-                //OnEndDealCard(this, new EventArgs());
+                OnEndDealCard(this, new EventArgs());
             }
             else
             {

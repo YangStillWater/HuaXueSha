@@ -31,12 +31,15 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.btnGameBegin = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblAvailableCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblSelectTarget = new System.Windows.Forms.Label();
             this.lblSelectCard = new System.Windows.Forms.Label();
             this.btnDealCard = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblDroppedCount = new System.Windows.Forms.Label();
+            this.lblDefend = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +54,7 @@
             // 
             // btnGameBegin
             // 
-            this.btnGameBegin.Location = new System.Drawing.Point(660, 59);
+            this.btnGameBegin.Location = new System.Drawing.Point(660, 89);
             this.btnGameBegin.Name = "btnGameBegin";
             this.btnGameBegin.Size = new System.Drawing.Size(75, 23);
             this.btnGameBegin.TabIndex = 4;
@@ -68,14 +71,14 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "剩余牌数";
             // 
-            // label2
+            // lblAvailableCount
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(713, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "label2";
+            this.lblAvailableCount.AutoSize = true;
+            this.lblAvailableCount.Location = new System.Drawing.Point(718, 32);
+            this.lblAvailableCount.Name = "lblAvailableCount";
+            this.lblAvailableCount.Size = new System.Drawing.Size(11, 12);
+            this.lblAvailableCount.TabIndex = 6;
+            this.lblAvailableCount.Text = "0";
             // 
             // flowLayoutPanel1
             // 
@@ -125,14 +128,45 @@
             this.btnDealCard.UseVisualStyleBackColor = true;
             this.btnDealCard.Click += new System.EventHandler(this.btnDealCard_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(658, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "弃牌堆牌数";
+            // 
+            // lblDroppedCount
+            // 
+            this.lblDroppedCount.AutoSize = true;
+            this.lblDroppedCount.Location = new System.Drawing.Point(731, 59);
+            this.lblDroppedCount.Name = "lblDroppedCount";
+            this.lblDroppedCount.Size = new System.Drawing.Size(11, 12);
+            this.lblDroppedCount.TabIndex = 11;
+            this.lblDroppedCount.Text = "0";
+            // 
+            // lblDefend
+            // 
+            this.lblDefend.AutoSize = true;
+            this.lblDefend.Location = new System.Drawing.Point(660, 271);
+            this.lblDefend.Name = "lblDefend";
+            this.lblDefend.Size = new System.Drawing.Size(65, 12);
+            this.lblDefend.TabIndex = 12;
+            this.lblDefend.Text = "请出牌应对";
+            this.lblDefend.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(867, 391);
+            this.Controls.Add(this.lblDefend);
+            this.Controls.Add(this.lblDroppedCount);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblAvailableCount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnGameBegin);
             this.Controls.Add(this.listBox1);
@@ -150,12 +184,15 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnGameBegin;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblAvailableCount;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblSelectCard;
         private System.Windows.Forms.Button btnDealCard;
         private System.Windows.Forms.Label lblSelectTarget;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblDroppedCount;
+        private System.Windows.Forms.Label lblDefend;
     }
 }
 

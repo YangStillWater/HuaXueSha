@@ -119,9 +119,18 @@ namespace WindowsForms
                     btnDealCard.Show();
                     btnDealCard.Enabled = true;
                 }));
-
             };
+            gCtx.OnEndDealCard += InvokeSynchronize;
+
             gCtx.OnBloodDrop += InvokeSynchronize;
+
+            gCtx.Rules.OnBeginDefend+=delegate
+            {
+                this.Invoke(new Action(() =>
+                {
+                    lblDefend.Show();
+                }));
+            };
         }
         void CardSelect(object sender, EventArgs e)
         {
@@ -148,7 +157,8 @@ namespace WindowsForms
 
         void Synchronize()
         {
-            label2.Text = gCtx.availableCards.Count.ToString();
+            lblAvailableCount.Text = gCtx.availableCards.Count.ToString();
+            lblDroppedCount.Text = gCtx.droppedCards.Count.ToString();
             foreach (var pb in PlayerBoxes)
             {
                 pb.Synchronize();

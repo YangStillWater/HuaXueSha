@@ -24,13 +24,22 @@ namespace WindowsForms
 
             lbCards = new ListBox();
             lbCards.Name = "cardList";
+            lbCards.Top = 10;
+            lbCards.Left = 5;
+            lbCards.Width = 100;
+            lbCards.Height = 120;
             cardsSource = new BindingSource(player.Cards, null);
             lbCards.DataSource = cardsSource;
 
             lblBlood = new Label();
             lblBlood.Text = player.Blood.ToString();
+            lblBlood.Top = 130;
+
             this.Text = player.name;
             this.Name = "groupbox";
+            this.Height = 150;
+            this.Width = 120;
+
             this.Controls.Add(lbCards);
             this.Controls.Add(lblBlood);
         }

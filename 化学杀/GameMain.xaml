@@ -129,13 +129,12 @@
                                               </InvokeMethod>
                                             </If.Then>
                                           </If>
-                                          <InvokeMethod DisplayName="出牌" MethodName="DealOneCard">
+                                          <InvokeMethod DisplayName="出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_27" MethodName="DealOneCard">
                                             <InvokeMethod.TargetObject>
                                               <InArgument x:TypeArguments="g:GameContext">
                                                 <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
                                               </InArgument>
                                             </InvokeMethod.TargetObject>
-                                            <sap2010:WorkflowViewState.IdRef>InvokeMethod_27</sap2010:WorkflowViewState.IdRef>
                                           </InvokeMethod>
                                           <Switch x:TypeArguments="x:String" DisplayName="出牌结果" sap2010:WorkflowViewState.IdRef="Switch`1_4">
                                             <Switch.Expression>
@@ -263,7 +262,7 @@
         </InvokeMethod>
       </TryCatch.Finally>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sKTADiwIOAgEBMQWJAhACAQIzCe4BFQIBCoECCYcCGAIBB/YBDfwBHAIBAzkPPx4CAUlCE0giAgFFSxdRJgIBQVQbWioCAT1dH2MuAgE5ZiO0AS4CARe3ASe9ATYCARPAASvGAToCAQ/JAS/PAT4CAQuEAg+EAlUCAQj5ARP5AVkCAQQ8FTxbAgFKRRlFXwIBRk4dTmMCAUJXIVdnAgE+YCVgawIBOmgnogEvAgEYugEtugFzAgEUwwExwwF3AgEQzAE1zAF7AgEMbCmhATQCARxqK2qOAQIBGW0rczoCATV0K4MBMAIBLYQBK4sBOgIBKYwBK6ABNAIBHXAxcHcCATZ3MXeMAQIBLnsvgQE+AgExhwExhwF3AgEqjwExjwGNAQIBHpIBLZgBPAIBJZkBLZ8BPAIBIX41fnsCATKVATOVAX0CASacATOcAX0CASI=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sKTADigIOAgEBMQWIAhACAQIzCe0BFQIBCoACCYYCGAIBB/UBDfsBHAIBAzkPPx4CAUlCE0giAgFFSxdRJgIBQVQbWioCAT1dH2MuAgE5ZiOzAS4CARe2ASe8ATYCARO/ASvFAToCAQ/IAS/OAT4CAQuDAg+DAlUCAQj4ARP4AVkCAQQ8FTxbAgFKRRlFXwIBRk4dTmMCAUJXIVdnAgE+YCVgawIBOmgnoQEvAgEYuQEtuQFzAgEUwgExwgF3AgEQywE1ywF7AgEMbCmgATQCARxqK2qOAQIBGW0rczoCATV0K4MBMAIBLYQBK4oBOgIBKYsBK58BNAIBHXAxcHcCATZ3MXeMAQIBLnsvgQE+AgExhwExhwF3AgEqjgExjgGNAQIBHpEBLZcBPAIBJZgBLZ4BPAIBIX41fnsCATKUATOUAX0CASabATObAX0CASI=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -321,7 +320,7 @@
       <sap2010:ViewStateData Id="InvokeMethod_25" sap:VirtualizedContainerService.HintSize="225,133" />
       <sap2010:ViewStateData Id="InvokeMethod_26" sap:VirtualizedContainerService.HintSize="225,133" />
       <sap2010:ViewStateData Id="Switch`1_4" sap:VirtualizedContainerService.HintSize="484,631" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="506,1427">
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="506,1500">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
