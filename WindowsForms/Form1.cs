@@ -17,39 +17,29 @@ namespace WindowsForms
     public partial class Form1 : Form
     {
         GameContext gCtx = new GameContext();
-        GroupBox currentGroupBox
+        PlayerBox currentPlayerBox
         {
             get
             {
                 var p = gCtx.currentPlayer;
                 int i = gCtx.players.IndexOf(p);
-                var gb = flowLayoutPanel1.Controls.Find("groupbox", false)[i] as GroupBox;
+                var gb = flowLayoutPanel1.Controls.Find("groupbox", false)[i] as PlayerBox;
                 return gb;
             }
         }
-        List<GroupBox> otherGroupBoxes
+        List<PlayerBox> PlayerBoxes;
+        List<PlayerBox> otherPlayerBoxes
         {
             get
             {
-                var gbs = flowLayoutPanel1.Controls.Find("groupbox", false);
-                var gbList = new List<GroupBox>(gbs.Length);
-                var p = gCtx.currentPlayer;
-                int pi = gCtx.players.IndexOf(p);
-                for (int i = 0; i < gbs.Length; i++)
-                {
-                    if (i!=pi)
-                    {
-                        gbList.Add(gbs[i] as GroupBox);
-                    }
-                }
-                return gbList;
+                return PlayerBoxes.Where(b => b.Player != gCtx.currentPlayer).ToList();
             }
         }
         ListBox currentListBox
         {
             get
             {
-                return currentGroupBox.Controls.Find("cardList", false).FirstOrDefault() as ListBox;
+                return currentPlayerBox.lbCards;
             }
         }
 
@@ -57,52 +47,29 @@ namespace WindowsForms
         {
             InitializeComponent();
 
+            PlayerBoxes = new List<PlayerBox>(gCtx.players.Count);
             foreach (var player in gCtx.players)
             {
-                var lb = new ListBox();
-                lb.Name = "cardList";
-                //lb.SelectedIndexChanged += delegate
-                //{
-                //    MessageBox.Show(lb.SelectedIndex.ToString());
-                //};
-                var lbl = new Label();
-                lbl.Text = player.Blood.ToString();
-                var groupbox = new GroupBox();
-                groupbox.Text = player.name;
-                groupbox.Name = "groupbox";
-                groupbox.Controls.Add(lb);
-                groupbox.Controls.Add(lbl);
-                flowLayoutPanel1.Controls.Add(groupbox);
+                PlayerBoxes.Add(new PlayerBox(player));
             }
+            flowLayoutPanel1.Controls.AddRange(PlayerBoxes.ToArray());
 
 
-            gCtx.OnBeginPrepareCards += delegate
-            {
-                this.Invoke(new Action(() => label2.Text = gCtx.availableCards.Count.ToString()));
-            };
-            gCtx.OnEndPrepareCards += delegate
+            gCtx.OnBeginPrepareCards += InvokeSynchronize;
+            gCtx.OnEndPrepareCards += InvokeSynchronize;
+            gCtx.OnBeginGetCards += delegate
             {
                 this.Invoke(new Action(() =>
                 {
-                    for (int i = 0; i < gCtx.players.Count; i++)
-                    {
-                        var p = gCtx.players[i];
-                        var gb = flowLayoutPanel1.Controls.Find("groupbox", false)[i] as GroupBox;
-                        var l = gb.Controls.Find("cardList", false).FirstOrDefault() as ListBox;
-                        l.Items.AddRange(p.Cards.ToArray());
-                    }
-                    label2.Text = gCtx.availableCards.Count.ToString();
+                    MessageBox.Show("开始发牌");
                 }));
             };
             gCtx.OnEndGetCards += delegate
             {
                 this.Invoke(new Action(() =>
                 {
-                    currentGroupBox.BackColor = Color.LightYellow;
-                    currentListBox.Items.Clear();
-                    currentListBox.Items.AddRange(gCtx.currentPlayer.Cards.ToArray());
-
-                    label2.Text = gCtx.availableCards.Count.ToString();
+                    currentPlayerBox.BackColor = Color.LightYellow;
+                    Synchronize();
                 }));
             };
             gCtx.OnBeginSelectOneCard += delegate
@@ -128,7 +95,7 @@ namespace WindowsForms
                 this.Invoke(new Action(() =>
                 {
                     lblSelectTarget.Show();
-                    foreach (var gb in otherGroupBoxes)
+                    foreach (var gb in otherPlayerBoxes)
                     {
                         gb.Click += PlayerSelect;
                     }
@@ -139,7 +106,7 @@ namespace WindowsForms
                 this.Invoke(new Action(() =>
                 {
                     lblSelectTarget.Hide();
-                    foreach (var gb in otherGroupBoxes)
+                    foreach (var gb in otherPlayerBoxes)
                     {
                         gb.Click -= PlayerSelect;
                     }
@@ -154,10 +121,7 @@ namespace WindowsForms
                 }));
 
             };
-            gCtx.OnBloodDrop += delegate
-            {
-
-            };
+            gCtx.OnBloodDrop += InvokeSynchronize;
         }
         void CardSelect(object sender, EventArgs e)
         {
@@ -182,6 +146,19 @@ namespace WindowsForms
             WorkflowInvoker.Invoke(workflow1, wfArgs);
         }
 
+        void Synchronize()
+        {
+            label2.Text = gCtx.availableCards.Count.ToString();
+            foreach (var pb in PlayerBoxes)
+            {
+                pb.Synchronize();
+            }
+        }
+        void InvokeSynchronize(object sender, EventArgs e)
+        {
+            this.Invoke(new Action(() => Synchronize()));
+        }
+
         private void btnGameBegin_Click(object sender, EventArgs e)
         {
             ThreadPool.QueueUserWorkItem(
@@ -191,7 +168,7 @@ namespace WindowsForms
 
         private void btnDealCard_Click(object sender, EventArgs e)
         {
-            foreach (var gb in otherGroupBoxes)
+            foreach (var gb in otherPlayerBoxes)
             {
                 gb.BackColor = Color.FromKnownColor(KnownColor.Control);
             }
@@ -199,6 +176,7 @@ namespace WindowsForms
             btnDealCard.Hide();
             gCtx.DealThisOneCard(currentListBox.SelectedIndex);
             panel1.Hide();
+            Synchronize();
         }
 
     }

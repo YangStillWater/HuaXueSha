@@ -25,6 +25,7 @@ namespace GameCore
 
         public event EventHandler<EventArgs> OnBeginPrepareCards;
         public event EventHandler<EventArgs> OnEndPrepareCards;
+        public event EventHandler<EventArgs> OnBeginGetCards;
         public event EventHandler<EventArgs> OnEndGetCards;
         public event EventHandler<EventArgs> OnBeginSelectOneCard;
         public event EventHandler<EventArgs> OnEndSelectOneCard;
@@ -116,6 +117,7 @@ namespace GameCore
         }
         public void GetCards()
         {
+            OnBeginGetCards(this, new EventArgs());
             for (int i = 0; i < currentPlayer.CardCountToGet; i++)
             {
                 if (availableCards.Count == 0)
