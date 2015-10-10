@@ -17,59 +17,73 @@ namespace GameCore
         public Card offenderCard;
         public Card defenderCard;
 
+        public bool IsTolerated = false;
+
         public CardRules(GameContext context)
         {
             _gctx = context;
         }
-        public void DealOffence()
+        public void Respond()
         {
             offenderCard = _gctx.currentCard;
             foreach (var t in _gctx.targets)
             {
                 currentTarget = t;
-                if (!Defend())
+                OnBeginDefend?.Invoke(this, new EventArgs());
+                if (_gctx.autoEvent.WaitOne(15000, false) && !IsTolerated)//超时或点击不出牌
                 {
-                    t.Blood--; 
+                    DefendResult();
                 }
-            }
-        }
-        public bool Defend()
-        {
-            OnBeginDefend(this, new EventArgs());
-            if (_gctx.autoEvent.WaitOne(15000, false))
-            {
+                else
+                {
+                    TolerateResult();
+                }
                 OnEndDefend(this, new EventArgs());
-                return true;
-            }
-            else
-            {
-                OnEndDefend(this, new EventArgs());
-                return false;
             }
         }
 
-        public void DefendDone(int cardIndex)
+        public void Defend(int cardIndex)
         {
             defenderCard = currentTarget.Cards[cardIndex];
-            if (CanDefend(offenderCard,defenderCard))
+            if (CanDefend(offenderCard, defenderCard))
             {
                 currentTarget.Cards.Remove(defenderCard);
                 _gctx.droppedCards.Add(defenderCard);
                 _gctx.autoEvent.Set();
             }
         }
-
-        public bool CanDefend(Card offender,Card defender)
+        public void Tolerate()
         {
-            if (offender.GetType()==typeof(Acid))
+            IsTolerated = true;
+            _gctx.autoEvent.Set();
+        }
+        public bool CanDefend(Card offender, Card defender)
+        {
+            if (offender is Acid)
             {
-                return defender.GetType() == typeof(Base);
+                return defender is Base;
             }
-            if (offender.GetType()==typeof(Base))
+            if (offender is Base)
             {
-                return defender.GetType() == typeof(Acid);
+                return defender is Acid;
             }
             return false;
         }
+        void TolerateResult()
+        {
+            if (offenderCard is Acid || offenderCard is Base)
+            {
+                currentTarget.DropBlood();
+            }
+            else if (offenderCard is Glucose)
+            {
+                currentTarget.AddBlood();
+            }
+        }
+        void DefendResult()
+        {
+
+        }
+
     }
 }

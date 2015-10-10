@@ -28,30 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbMessage = new System.Windows.Forms.ListBox();
             this.btnGameBegin = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lblAvailableCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelDealCard = new System.Windows.Forms.Panel();
+            this.bntFinishDeal = new System.Windows.Forms.Button();
             this.lblSelectTarget = new System.Windows.Forms.Label();
             this.lblSelectCard = new System.Windows.Forms.Label();
             this.btnDealCard = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lblDroppedCount = new System.Windows.Forms.Label();
             this.lblDefend = new System.Windows.Forms.Label();
-            this.bntFinishDeal = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.panelRespond = new System.Windows.Forms.Panel();
+            this.btnTolerate = new System.Windows.Forms.Button();
+            this.btnRespond = new System.Windows.Forms.Button();
+            this.panelDrop = new System.Windows.Forms.Panel();
+            this.btnDrop = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panelDealCard.SuspendLayout();
+            this.panelRespond.SuspendLayout();
+            this.panelDrop.SuspendLayout();
             this.SuspendLayout();
             // 
-            // listBox1
+            // lbMessage
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(23, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(601, 100);
-            this.listBox1.TabIndex = 0;
+            this.lbMessage.FormattingEnabled = true;
+            this.lbMessage.ItemHeight = 12;
+            this.lbMessage.Location = new System.Drawing.Point(23, 12);
+            this.lbMessage.Name = "lbMessage";
+            this.lbMessage.Size = new System.Drawing.Size(601, 100);
+            this.lbMessage.TabIndex = 0;
             // 
             // btnGameBegin
             // 
@@ -85,20 +93,30 @@
             // 
             this.flowLayoutPanel1.Location = new System.Drawing.Point(30, 153);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(593, 202);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(594, 334);
             this.flowLayoutPanel1.TabIndex = 8;
             // 
-            // panel1
+            // panelDealCard
             // 
-            this.panel1.Controls.Add(this.bntFinishDeal);
-            this.panel1.Controls.Add(this.lblSelectTarget);
-            this.panel1.Controls.Add(this.lblSelectCard);
-            this.panel1.Controls.Add(this.btnDealCard);
-            this.panel1.Location = new System.Drawing.Point(660, 153);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(169, 100);
-            this.panel1.TabIndex = 9;
-            this.panel1.Visible = false;
+            this.panelDealCard.Controls.Add(this.bntFinishDeal);
+            this.panelDealCard.Controls.Add(this.lblSelectTarget);
+            this.panelDealCard.Controls.Add(this.lblSelectCard);
+            this.panelDealCard.Controls.Add(this.btnDealCard);
+            this.panelDealCard.Location = new System.Drawing.Point(660, 153);
+            this.panelDealCard.Name = "panelDealCard";
+            this.panelDealCard.Size = new System.Drawing.Size(169, 100);
+            this.panelDealCard.TabIndex = 9;
+            this.panelDealCard.Visible = false;
+            // 
+            // bntFinishDeal
+            // 
+            this.bntFinishDeal.Location = new System.Drawing.Point(94, 70);
+            this.bntFinishDeal.Name = "bntFinishDeal";
+            this.bntFinishDeal.Size = new System.Drawing.Size(62, 23);
+            this.bntFinishDeal.TabIndex = 2;
+            this.bntFinishDeal.Text = "结束";
+            this.bntFinishDeal.UseVisualStyleBackColor = true;
+            this.bntFinishDeal.Click += new System.EventHandler(this.bntFinishDeal_Click);
             // 
             // lblSelectTarget
             // 
@@ -151,41 +169,95 @@
             // lblDefend
             // 
             this.lblDefend.AutoSize = true;
-            this.lblDefend.Location = new System.Drawing.Point(660, 271);
+            this.lblDefend.Location = new System.Drawing.Point(10, 16);
             this.lblDefend.Name = "lblDefend";
             this.lblDefend.Size = new System.Drawing.Size(65, 12);
             this.lblDefend.TabIndex = 12;
             this.lblDefend.Text = "请出牌应对";
-            this.lblDefend.Visible = false;
             // 
-            // bntFinishDeal
+            // panelRespond
             // 
-            this.bntFinishDeal.Location = new System.Drawing.Point(94, 70);
-            this.bntFinishDeal.Name = "bntFinishDeal";
-            this.bntFinishDeal.Size = new System.Drawing.Size(59, 23);
-            this.bntFinishDeal.TabIndex = 2;
-            this.bntFinishDeal.Text = "结束";
-            this.bntFinishDeal.UseVisualStyleBackColor = true;
-            this.bntFinishDeal.Click += new System.EventHandler(this.bntFinishDeal_Click);
+            this.panelRespond.Controls.Add(this.btnTolerate);
+            this.panelRespond.Controls.Add(this.btnRespond);
+            this.panelRespond.Controls.Add(this.lblDefend);
+            this.panelRespond.Location = new System.Drawing.Point(660, 272);
+            this.panelRespond.Name = "panelRespond";
+            this.panelRespond.Size = new System.Drawing.Size(169, 83);
+            this.panelRespond.TabIndex = 13;
+            this.panelRespond.Visible = false;
+            // 
+            // btnTolerate
+            // 
+            this.btnTolerate.Location = new System.Drawing.Point(94, 43);
+            this.btnTolerate.Name = "btnTolerate";
+            this.btnTolerate.Size = new System.Drawing.Size(62, 23);
+            this.btnTolerate.TabIndex = 14;
+            this.btnTolerate.Text = "放弃";
+            this.btnTolerate.UseVisualStyleBackColor = true;
+            this.btnTolerate.Click += new System.EventHandler(this.btnTolerate_Click);
+            // 
+            // btnRespond
+            // 
+            this.btnRespond.Location = new System.Drawing.Point(13, 43);
+            this.btnRespond.Name = "btnRespond";
+            this.btnRespond.Size = new System.Drawing.Size(62, 23);
+            this.btnRespond.TabIndex = 13;
+            this.btnRespond.Text = "出牌";
+            this.btnRespond.UseVisualStyleBackColor = true;
+            this.btnRespond.Click += new System.EventHandler(this.btnRespond_Click);
+            // 
+            // panelDrop
+            // 
+            this.panelDrop.Controls.Add(this.btnDrop);
+            this.panelDrop.Controls.Add(this.label2);
+            this.panelDrop.Location = new System.Drawing.Point(660, 382);
+            this.panelDrop.Name = "panelDrop";
+            this.panelDrop.Size = new System.Drawing.Size(168, 104);
+            this.panelDrop.TabIndex = 14;
+            this.panelDrop.Visible = false;
+            // 
+            // btnDrop
+            // 
+            this.btnDrop.Location = new System.Drawing.Point(13, 60);
+            this.btnDrop.Name = "btnDrop";
+            this.btnDrop.Size = new System.Drawing.Size(62, 23);
+            this.btnDrop.TabIndex = 14;
+            this.btnDrop.Text = "弃牌";
+            this.btnDrop.UseVisualStyleBackColor = true;
+            this.btnDrop.Click += new System.EventHandler(this.btnDrop_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "请选择弃掉的牌";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(867, 391);
-            this.Controls.Add(this.lblDefend);
+            this.ClientSize = new System.Drawing.Size(868, 522);
+            this.Controls.Add(this.panelDrop);
+            this.Controls.Add(this.panelRespond);
             this.Controls.Add(this.lblDroppedCount);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelDealCard);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.lblAvailableCount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnGameBegin);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lbMessage);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelDealCard.ResumeLayout(false);
+            this.panelDealCard.PerformLayout();
+            this.panelRespond.ResumeLayout(false);
+            this.panelRespond.PerformLayout();
+            this.panelDrop.ResumeLayout(false);
+            this.panelDrop.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,12 +265,12 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbMessage;
         private System.Windows.Forms.Button btnGameBegin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblAvailableCount;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelDealCard;
         private System.Windows.Forms.Label lblSelectCard;
         private System.Windows.Forms.Button btnDealCard;
         private System.Windows.Forms.Label lblSelectTarget;
@@ -206,6 +278,12 @@
         private System.Windows.Forms.Label lblDroppedCount;
         private System.Windows.Forms.Label lblDefend;
         private System.Windows.Forms.Button bntFinishDeal;
+        private System.Windows.Forms.Panel panelRespond;
+        private System.Windows.Forms.Button btnTolerate;
+        private System.Windows.Forms.Button btnRespond;
+        private System.Windows.Forms.Panel panelDrop;
+        private System.Windows.Forms.Button btnDrop;
+        private System.Windows.Forms.Label label2;
     }
 }
 

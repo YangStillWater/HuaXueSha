@@ -12,6 +12,9 @@ namespace GameCore
     public class FinishDealCardsException : Exception
     {
     }
+    public class PlayerDeadException : Exception
+    {
+    }
     public class GameOverException : Exception
     {
     }

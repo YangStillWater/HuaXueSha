@@ -12,12 +12,25 @@ namespace GameCore
         /// <summary>
         /// 血，三国杀中的体力
         /// </summary>
-        public int Blood = 4;
+        public int Blood => blood;
+        private int blood = 4;
+        public void DropBlood(int num = 1)
+        {
+            blood -= num;
+            if (blood <= 0)
+            {
+                throw new PlayerDeadException();
+            }
+        }
+        public void AddBlood(int num = 1)
+        {
+            blood = Math.Min(4, blood + num);
+        }
         public List<Card> Cards = new List<Card>();
 
         public int CardCountWhenBegin = 4;
         public int CardCountToGet = 2;
 
         public Character Character { get; set; }
-   }
+    }
 }

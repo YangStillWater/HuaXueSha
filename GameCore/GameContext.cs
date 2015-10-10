@@ -33,7 +33,6 @@ namespace GameCore
         public event EventHandler<EventArgs> OnEndSetTarget;
         public event EventHandler<EventArgs> OnBeginDealCard;
         public event EventHandler<EventArgs> OnEndDealCard;
-        public event EventHandler<EventArgs> OnBloodDrop;
         public event EventHandler<EventArgs> OnGameOver;
 
         public int round = 1;//第几轮
@@ -198,6 +197,10 @@ namespace GameCore
             currentPlayer.Cards.Remove(currentCard);
             droppedCards.Add(currentCard);
             autoEvent.Set();
+        }
+        public void Respond()
+        {
+            Rules.Respond();
         }
 
         public void FinishDealCards()

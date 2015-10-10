@@ -136,27 +136,13 @@
                                               </InArgument>
                                             </InvokeMethod.TargetObject>
                                           </InvokeMethod>
-                                          <Switch x:TypeArguments="x:String" DisplayName="出牌结果" sap2010:WorkflowViewState.IdRef="Switch`1_4">
-                                            <Switch.Expression>
-                                              <InArgument x:TypeArguments="x:String">
-                                                <mca:CSharpValue x:TypeArguments="x:String">ctx.currentCard.GetType().Name</mca:CSharpValue>
+                                          <InvokeMethod DisplayName="应对出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_28" MethodName="Respond">
+                                            <InvokeMethod.TargetObject>
+                                              <InArgument x:TypeArguments="g:GameContext">
+                                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
                                               </InArgument>
-                                            </Switch.Expression>
-                                            <InvokeMethod x:Key="Acid" sap2010:WorkflowViewState.IdRef="InvokeMethod_25" MethodName="DealOffence">
-                                              <InvokeMethod.TargetObject>
-                                                <InArgument x:TypeArguments="g:CardRules">
-                                                  <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
-                                                </InArgument>
-                                              </InvokeMethod.TargetObject>
-                                            </InvokeMethod>
-                                            <InvokeMethod x:Key="Base" sap2010:WorkflowViewState.IdRef="InvokeMethod_26" MethodName="DealOffence">
-                                              <InvokeMethod.TargetObject>
-                                                <InArgument x:TypeArguments="g:CardRules">
-                                                  <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
-                                                </InArgument>
-                                              </InvokeMethod.TargetObject>
-                                            </InvokeMethod>
-                                          </Switch>
+                                            </InvokeMethod.TargetObject>
+                                          </InvokeMethod>
                                         </Sequence>
                                       </While>
                                     </TryCatch.Try>
@@ -264,7 +250,7 @@
         </InvokeMethod>
       </TryCatch.Finally>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sLTADjAIOAgEBMQWKAhACAQIzCe8BFQIBCoICCYgCGAIBB/cBDf0BHAIBAzkPPx4CAU1CE0giAgFJSxdRJgIBRVQbWioCAUFdH2MuAgE9ZiO1AS4CARe4ASe+ATYCARPBASvHAToCAQ/KAS/QAT4CAQuFAg+FAlUCAQj6ARP6AVkCAQQ8FTxbAgFORRlFXwIBSk4dTmMCAUZXIVdnAgFCYCVgawIBPmgnoQEvAgEcqQErqQF1AgEasQErsQF0AgEYuwEtuwFzAgEUxAExxAF3AgEQzQE1zQF7AgEMbCmgATQCASBqK2qOAQIBHakBaakBcgIBG7EBabEBcQIBGW0rczoCATl0K4MBMAIBMYQBK4oBOgIBLYsBK58BNAIBIXAxcHcCATp3MXeMAQIBMnsvgQE+AgE1hwExhwF3AgEujgExjgGNAQIBIpEBLZcBPAIBKZgBLZ4BPAIBJX41fnsCATaUATOUAX0CASqbATObAX0CASY=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sKTAD/gEOAgEBMQX8ARACAQIzCeEBFQIBCvQBCfoBGAIBB+kBDe8BHAIBAzkPPx4CAUVCE0giAgFBSxdRJgIBPVQbWioCATldH2MuAgE1ZiOnAS4CAReqASewATYCAROzASu5AToCAQ+8AS/CAT4CAQv3AQ/3AVUCAQjsARPsAVkCAQQ8FTxbAgFGRRlFXwIBQk4dTmMCAT5XIVdnAgE6YCVgawIBNmgnkwEvAgEcmwErmwF1AgEaowErowF0AgEYrQEtrQFzAgEUtgExtgF3AgEQvwE1vwF7AgEMbCmSATQCASBqK2qOAQIBHZsBaZsBcgIBG6MBaaMBcQIBGW0rczoCATF0K4MBMAIBKYQBK4oBOgIBJYsBK5EBOgIBIXAxcHcCATJ3MXeMAQIBKnsvgQE+AgEthwExhwF3AgEmjgExjgF3AgEifjV+ewIBLg==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -303,7 +289,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_23" sap:VirtualizedContainerService.HintSize="484,133">
+      <sap2010:ViewStateData Id="InvokeMethod_23" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -317,30 +303,19 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="484,286" />
-      <sap2010:ViewStateData Id="InvokeMethod_27" sap:VirtualizedContainerService.HintSize="484,133" />
-      <sap2010:ViewStateData Id="InvokeMethod_25" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="InvokeMethod_26" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="Switch`1_4" sap:VirtualizedContainerService.HintSize="484,631" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="506,1427">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="225,53" />
+      <sap2010:ViewStateData Id="InvokeMethod_27" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="InvokeMethod_28" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="247,696">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="While_2" sap:VirtualizedContainerService.HintSize="532,1590" />
+      <sap2010:ViewStateData Id="While_2" sap:VirtualizedContainerService.HintSize="464,223" />
       <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
-      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="536,134">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
-      <sap2010:ViewStateData Id="Catch`1_5" sap:VirtualizedContainerService.HintSize="536,134">
+      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="404,23">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -348,7 +323,16 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="550,2177">
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Catch`1_5" sap:VirtualizedContainerService.HintSize="404,23">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,321">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -503,8 +487,8 @@
       <sap2010:ViewStateData Id="HuaXueSha.GameMain_1" sap:VirtualizedContainerService.HintSize="1316,2932">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
-            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+            <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+            <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>

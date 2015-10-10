@@ -33,21 +33,27 @@ namespace WindowsForms
                 }
             }
         }
+        PlayerBox currentTargetPlayerBox
+        {
+            get
+            {
+                var p = gCtx.Rules.currentTarget;
+                if (p != null)
+                {
+                    int i = gCtx.players.IndexOf(p);
+                    return PlayerBoxes[i];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         List<PlayerBox> PlayerBoxes;
-        List<PlayerBox> otherPlayerBoxes
-        {
-            get
-            {
-                return PlayerBoxes.Where(b => b.Player != gCtx.currentPlayer).ToList();
-            }
-        }
-        ListBox currentListBox
-        {
-            get
-            {
-                return currentPlayerBox.lbCards;
-            }
-        }
+        List<PlayerBox> otherPlayerBoxes => PlayerBoxes.Where(b => b.Player != gCtx.currentPlayer).ToList();
+
+        ListBox currentListBox => currentPlayerBox.lbCards;
+        ListBox currentTargetListBox => currentTargetPlayerBox.lbCards;
 
         public Form1()
         {
@@ -65,23 +71,14 @@ namespace WindowsForms
             gCtx.OnEndPrepareCards += InvokeSynchronize;
             gCtx.OnBeginGetCards += delegate
             {
-                this.Invoke(new Action(() =>
-                {
-                    MessageBox.Show($"玩家{gCtx.currentPlayer.name}摸{gCtx.currentPlayer.CardCountToGet}张牌");
-                }));
+                InvokeAddMessage($"玩家{gCtx.currentPlayer.name}摸{gCtx.currentPlayer.CardCountToGet}张牌");
             };
-            gCtx.OnEndGetCards += delegate
-            {
-                this.Invoke(new Action(() =>
-                {
-                    Synchronize();
-                }));
-            };
+            gCtx.OnEndGetCards += InvokeSynchronize;
             gCtx.OnBeginSelectOneCard += delegate
             {
                 this.Invoke(new Action(() =>
                 {
-                    panel1.Visible = true;
+                    panelDealCard.Visible = true;
                     lblSelectCard.Show();
 
                     currentListBox.SelectedIndexChanged += CardSelect;
@@ -93,6 +90,7 @@ namespace WindowsForms
                 {
                     lblSelectCard.Hide();
                     currentListBox.SelectedIndexChanged -= CardSelect;
+                    AddMessage($"玩家{gCtx.currentPlayer.name}选择了牌{gCtx.currentCard}");
                 }));
             };
             gCtx.OnBeginSetTarget += delegate
@@ -100,6 +98,7 @@ namespace WindowsForms
                 this.Invoke(new Action(() =>
                 {
                     lblSelectTarget.Show();
+                    AddMessage($"玩家{gCtx.currentPlayer.name}正在选择目标……");
                     foreach (var gb in otherPlayerBoxes)
                     {
                         gb.Click += PlayerSelect;
@@ -111,6 +110,7 @@ namespace WindowsForms
                 this.Invoke(new Action(() =>
                 {
                     lblSelectTarget.Hide();
+                    AddMessage($"玩家{gCtx.currentPlayer.name}选择了目标{gCtx.targets.First().name}");
                     foreach (var gb in otherPlayerBoxes)
                     {
                         gb.Click -= PlayerSelect;
@@ -126,17 +126,20 @@ namespace WindowsForms
                 }));
             };
             gCtx.OnEndDealCard += InvokeSynchronize;
-
-            gCtx.OnBloodDrop += InvokeSynchronize;
+            gCtx.OnEndDealCard += delegate {
+                InvokeAddMessage($"玩家{gCtx.currentPlayer.name}对玩家{string.Join(",", gCtx.targets.Select(t=>t.name))}出牌{gCtx.currentCard}");
+            };
 
             gCtx.Rules.OnBeginDefend += delegate
               {
                   this.Invoke(new Action(() =>
                   {
-                      lblDefend.Show();
+                      panelRespond.Show();
                   }));
               };
+            gCtx.Rules.OnEndDefend += InvokeSynchronize;
         }
+        #region 自定义事件
         void CardSelect(object sender, EventArgs e)
         {
             gCtx.SelectThisOneCard(currentListBox.SelectedIndex);
@@ -151,6 +154,15 @@ namespace WindowsForms
             gCtx.SetTheTargets(new int[] { index });
         }
 
+        void InvokeSynchronize(object sender, EventArgs e)
+        {
+            this.Invoke(new Action(() => Synchronize()));
+        }
+
+
+        #endregion
+
+        #region 辅助程序
         void WorkMethod(object stateInfo)
         {
             Dictionary<string, object> wfArgs = new Dictionary<string, object>();
@@ -174,11 +186,17 @@ namespace WindowsForms
                 currentPlayerBox.BackColor = Color.LightYellow;
             }
         }
-        void InvokeSynchronize(object sender, EventArgs e)
+        void AddMessage(string msg)
         {
-            this.Invoke(new Action(() => Synchronize()));
+            lbMessage.Items.Add(msg);
         }
+        void InvokeAddMessage(string msg)
+        {
+            this.Invoke(new Action(() => AddMessage(msg)));
+        }
+        #endregion
 
+        #region 按钮事件
         private void btnGameBegin_Click(object sender, EventArgs e)
         {
             ThreadPool.QueueUserWorkItem(
@@ -188,14 +206,8 @@ namespace WindowsForms
 
         private void btnDealCard_Click(object sender, EventArgs e)
         {
-            foreach (var gb in otherPlayerBoxes)
-            {
-                gb.BackColor = Color.FromKnownColor(KnownColor.Control);
-            }
-            btnDealCard.Enabled = false;
-            btnDealCard.Hide();
             gCtx.DealThisOneCard(currentListBox.SelectedIndex);
-            panel1.Hide();
+            panelDealCard.Hide();
             Synchronize();
         }
 
@@ -203,5 +215,23 @@ namespace WindowsForms
         {
             gCtx.FinishDealCards();
         }
+
+        private void btnRespond_Click(object sender, EventArgs e)
+        {
+            gCtx.Rules.Defend(currentTargetListBox.SelectedIndex);
+            panelRespond.Hide();
+        }
+
+        private void btnTolerate_Click(object sender, EventArgs e)
+        {
+            gCtx.Rules.Tolerate();
+            panelRespond.Hide();
+        }
+
+        private void btnDrop_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 }
