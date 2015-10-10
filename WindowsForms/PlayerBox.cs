@@ -17,6 +17,7 @@ namespace WindowsForms
         public ListBox lbCards;
         public Label lblBlood;
         public Player Player;
+        public bool IsCurrent => true;
 
         public PlayerBox(Player player)
         {

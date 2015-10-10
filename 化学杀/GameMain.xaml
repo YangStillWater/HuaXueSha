@@ -142,14 +142,14 @@
                                                 <mca:CSharpValue x:TypeArguments="x:String">ctx.currentCard.GetType().Name</mca:CSharpValue>
                                               </InArgument>
                                             </Switch.Expression>
-                                            <InvokeMethod x:Key="&quot;Acid&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_25" MethodName="DealOffence">
+                                            <InvokeMethod x:Key="Acid" sap2010:WorkflowViewState.IdRef="InvokeMethod_25" MethodName="DealOffence">
                                               <InvokeMethod.TargetObject>
                                                 <InArgument x:TypeArguments="g:CardRules">
                                                   <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
                                                 </InArgument>
                                               </InvokeMethod.TargetObject>
                                             </InvokeMethod>
-                                            <InvokeMethod x:Key="&quot;Base&quot;" sap2010:WorkflowViewState.IdRef="InvokeMethod_26" MethodName="DealOffence">
+                                            <InvokeMethod x:Key="Base" sap2010:WorkflowViewState.IdRef="InvokeMethod_26" MethodName="DealOffence">
                                               <InvokeMethod.TargetObject>
                                                 <InArgument x:TypeArguments="g:CardRules">
                                                   <mca:CSharpValue x:TypeArguments="g:CardRules">ctx.Rules</mca:CSharpValue>
@@ -166,6 +166,7 @@
                                           <ActivityAction.Argument>
                                             <DelegateInArgument x:TypeArguments="g:TimeOutException" Name="exception" />
                                           </ActivityAction.Argument>
+                                          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="timeout" />
                                         </ActivityAction>
                                       </Catch>
                                       <Catch x:TypeArguments="g:FinishDealCardsException" sap2010:WorkflowViewState.IdRef="Catch`1_5">
@@ -173,6 +174,7 @@
                                           <ActivityAction.Argument>
                                             <DelegateInArgument x:TypeArguments="g:FinishDealCardsException" Name="exception" />
                                           </ActivityAction.Argument>
+                                          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="finish" />
                                         </ActivityAction>
                                       </Catch>
                                     </TryCatch.Catches>
@@ -262,7 +264,7 @@
         </InvokeMethod>
       </TryCatch.Finally>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sKTADigIOAgEBMQWIAhACAQIzCe0BFQIBCoACCYYCGAIBB/UBDfsBHAIBAzkPPx4CAUlCE0giAgFFSxdRJgIBQVQbWioCAT1dH2MuAgE5ZiOzAS4CARe2ASe8ATYCARO/ASvFAToCAQ/IAS/OAT4CAQuDAg+DAlUCAQj4ARP4AVkCAQQ8FTxbAgFKRRlFXwIBRk4dTmMCAUJXIVdnAgE+YCVgawIBOmgnoQEvAgEYuQEtuQFzAgEUwgExwgF3AgEQywE1ywF7AgEMbCmgATQCARxqK2qOAQIBGW0rczoCATV0K4MBMAIBLYQBK4oBOgIBKYsBK58BNAIBHXAxcHcCATZ3MXeMAQIBLnsvgQE+AgExhwExhwF3AgEqjgExjgGNAQIBHpEBLZcBPAIBJZgBLZ4BPAIBIX41fnsCATKUATOUAX0CASabATObAX0CASI=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sLTADjAIOAgEBMQWKAhACAQIzCe8BFQIBCoICCYgCGAIBB/cBDf0BHAIBAzkPPx4CAU1CE0giAgFJSxdRJgIBRVQbWioCAUFdH2MuAgE9ZiO1AS4CARe4ASe+ATYCARPBASvHAToCAQ/KAS/QAT4CAQuFAg+FAlUCAQj6ARP6AVkCAQQ8FTxbAgFORRlFXwIBSk4dTmMCAUZXIVdnAgFCYCVgawIBPmgnoQEvAgEcqQErqQF1AgEasQErsQF0AgEYuwEtuwFzAgEUxAExxAF3AgEQzQE1zQF7AgEMbCmgATQCASBqK2qOAQIBHakBaakBcgIBG7EBabEBcQIBGW0rczoCATl0K4MBMAIBMYQBK4oBOgIBLYsBK58BNAIBIXAxcHcCATp3MXeMAQIBMnsvgQE+AgE1hwExhwF3AgEujgExjgGNAQIBIpEBLZcBPAIBKZgBLZ4BPAIBJX41fnsCATaUATOUAX0CASqbATObAX0CASY=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -320,7 +322,7 @@
       <sap2010:ViewStateData Id="InvokeMethod_25" sap:VirtualizedContainerService.HintSize="225,133" />
       <sap2010:ViewStateData Id="InvokeMethod_26" sap:VirtualizedContainerService.HintSize="225,133" />
       <sap2010:ViewStateData Id="Switch`1_4" sap:VirtualizedContainerService.HintSize="484,631" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="506,1500">
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="506,1427">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -328,7 +330,17 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="While_2" sap:VirtualizedContainerService.HintSize="532,1590" />
-      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="404,23">
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="536,134">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Catch`1_5" sap:VirtualizedContainerService.HintSize="536,134">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -336,15 +348,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_5" sap:VirtualizedContainerService.HintSize="404,23">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="550,1955">
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="550,2177">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -488,15 +492,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="418,297" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="222,177">
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="1254,2728" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="1276,2852">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="HuaXueSha.GameMain_1" sap:VirtualizedContainerService.HintSize="262,257">
+      <sap2010:ViewStateData Id="HuaXueSha.GameMain_1" sap:VirtualizedContainerService.HintSize="1316,2932">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>

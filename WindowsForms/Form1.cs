@@ -22,9 +22,15 @@ namespace WindowsForms
             get
             {
                 var p = gCtx.currentPlayer;
-                int i = gCtx.players.IndexOf(p);
-                var gb = flowLayoutPanel1.Controls.Find("groupbox", false)[i] as PlayerBox;
-                return gb;
+                if (p != null)
+                {
+                    int i = gCtx.players.IndexOf(p);
+                    return PlayerBoxes[i];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         List<PlayerBox> PlayerBoxes;
@@ -61,14 +67,13 @@ namespace WindowsForms
             {
                 this.Invoke(new Action(() =>
                 {
-                    MessageBox.Show("开始发牌");
+                    MessageBox.Show($"玩家{gCtx.currentPlayer.name}摸{gCtx.currentPlayer.CardCountToGet}张牌");
                 }));
             };
             gCtx.OnEndGetCards += delegate
             {
                 this.Invoke(new Action(() =>
                 {
-                    currentPlayerBox.BackColor = Color.LightYellow;
                     Synchronize();
                 }));
             };
@@ -124,13 +129,13 @@ namespace WindowsForms
 
             gCtx.OnBloodDrop += InvokeSynchronize;
 
-            gCtx.Rules.OnBeginDefend+=delegate
-            {
-                this.Invoke(new Action(() =>
-                {
-                    lblDefend.Show();
-                }));
-            };
+            gCtx.Rules.OnBeginDefend += delegate
+              {
+                  this.Invoke(new Action(() =>
+                  {
+                      lblDefend.Show();
+                  }));
+              };
         }
         void CardSelect(object sender, EventArgs e)
         {
@@ -162,6 +167,11 @@ namespace WindowsForms
             foreach (var pb in PlayerBoxes)
             {
                 pb.Synchronize();
+                pb.BackColor = Color.FromKnownColor(KnownColor.Control);
+            }
+            if (currentPlayerBox != null)
+            {
+                currentPlayerBox.BackColor = Color.LightYellow;
             }
         }
         void InvokeSynchronize(object sender, EventArgs e)
@@ -189,5 +199,9 @@ namespace WindowsForms
             Synchronize();
         }
 
+        private void bntFinishDeal_Click(object sender, EventArgs e)
+        {
+            gCtx.FinishDealCards();
+        }
     }
 }

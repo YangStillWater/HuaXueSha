@@ -38,6 +38,7 @@ namespace GameCore
 
         public int round = 1;//第几轮
         public AutoResetEvent autoEvent = new AutoResetEvent(false);
+        public bool isFinishDeal = false;
 
         public CardRules Rules;
 
@@ -133,6 +134,11 @@ namespace GameCore
             OnBeginSelectOneCard(this, new EventArgs());
             if (autoEvent.WaitOne(15000, false))
             {
+                if (isFinishDeal)
+                {
+                    isFinishDeal = false;
+                    throw new FinishDealCardsException();
+                }
                 OnEndSelectOneCard(this, new EventArgs());
             }
             else
@@ -150,6 +156,11 @@ namespace GameCore
             OnBeginSetTarget(this, new EventArgs());
             if (autoEvent.WaitOne(15000, false))
             {
+                if (isFinishDeal)
+                {
+                    isFinishDeal = false;
+                    throw new FinishDealCardsException();
+                }
                 OnEndSetTarget(this, new EventArgs());
             }
             else
@@ -170,6 +181,11 @@ namespace GameCore
             OnBeginDealCard(this, new EventArgs());
             if (autoEvent.WaitOne(15000, false))
             {
+                if (isFinishDeal)
+                {
+                    isFinishDeal = false;
+                    throw new FinishDealCardsException();
+                }
                 OnEndDealCard(this, new EventArgs());
             }
             else
@@ -183,6 +199,12 @@ namespace GameCore
             droppedCards.Add(currentCard);
             autoEvent.Set();
         }
+
+        public void FinishDealCards()
+        {
+            isFinishDeal = true;
+            autoEvent.Set();
+        }
         public void DropCard()
         {
 
@@ -194,12 +216,6 @@ namespace GameCore
         public void GameOver()
         {
             OnGameOver(this, new EventArgs());
-        }
-        public Player GetTarget()
-        {
-            Console.WriteLine("input the index of the players. 0:A, 1:B");
-            string s = Console.ReadLine();
-            return players[Convert.ToInt32(s)];
         }
 
         #region 辅助程序

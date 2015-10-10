@@ -40,6 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblDroppedCount = new System.Windows.Forms.Label();
             this.lblDefend = new System.Windows.Forms.Label();
+            this.bntFinishDeal = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,6 +90,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.bntFinishDeal);
             this.panel1.Controls.Add(this.lblSelectTarget);
             this.panel1.Controls.Add(this.lblSelectCard);
             this.panel1.Controls.Add(this.btnDealCard);
@@ -122,7 +124,7 @@
             this.btnDealCard.Enabled = false;
             this.btnDealCard.Location = new System.Drawing.Point(13, 70);
             this.btnDealCard.Name = "btnDealCard";
-            this.btnDealCard.Size = new System.Drawing.Size(75, 23);
+            this.btnDealCard.Size = new System.Drawing.Size(62, 23);
             this.btnDealCard.TabIndex = 0;
             this.btnDealCard.Text = "出牌";
             this.btnDealCard.UseVisualStyleBackColor = true;
@@ -155,6 +157,16 @@
             this.lblDefend.TabIndex = 12;
             this.lblDefend.Text = "请出牌应对";
             this.lblDefend.Visible = false;
+            // 
+            // bntFinishDeal
+            // 
+            this.bntFinishDeal.Location = new System.Drawing.Point(94, 70);
+            this.bntFinishDeal.Name = "bntFinishDeal";
+            this.bntFinishDeal.Size = new System.Drawing.Size(59, 23);
+            this.bntFinishDeal.TabIndex = 2;
+            this.bntFinishDeal.Text = "结束";
+            this.bntFinishDeal.UseVisualStyleBackColor = true;
+            this.bntFinishDeal.Click += new System.EventHandler(this.bntFinishDeal_Click);
             // 
             // Form1
             // 
@@ -193,6 +205,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblDroppedCount;
         private System.Windows.Forms.Label lblDefend;
+        private System.Windows.Forms.Button bntFinishDeal;
     }
 }
 
