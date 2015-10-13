@@ -33,10 +33,12 @@ namespace GameCore
         public event EventHandler<EventArgs> OnEndSetTarget;
         public event EventHandler<EventArgs> OnBeginDealCard;
         public event EventHandler<EventArgs> OnEndDealCard;
+        public event EventHandler<EventArgs> OnDealCardsFinish;
         public event EventHandler<EventArgs> OnGameOver;
 
         public int round = 1;//第几轮
         public AutoResetEvent autoEvent = new AutoResetEvent(false);
+        public bool isOnSelectingCard = false;
         public bool isFinishDeal = false;
 
         public CardRules Rules;
@@ -130,9 +132,12 @@ namespace GameCore
         }
         public void SelectOneCard()
         {
+            targets.Clear();
+            isOnSelectingCard = true;
             OnBeginSelectOneCard(this, new EventArgs());
-            if (autoEvent.WaitOne(15000, false))
+            if (autoEvent.WaitOne(15000))
             {
+                isOnSelectingCard = false;
                 if (isFinishDeal)
                 {
                     isFinishDeal = false;
@@ -142,25 +147,32 @@ namespace GameCore
             }
             else
             {
+                isOnSelectingCard = false;
                 throw new TimeOutException();
             }
         }
         public void SelectThisOneCard(int cardIndex)
         {
-            currentCard = currentPlayer.Cards[cardIndex];
-            autoEvent.Set();
+            if (isOnSelectingCard)
+            {
+                currentCard = currentPlayer.Cards[cardIndex];
+                autoEvent.Set(); 
+            }
         }
         public void SetTargets()
         {
             OnBeginSetTarget(this, new EventArgs());
-            if (autoEvent.WaitOne(15000, false))
+            if (autoEvent.WaitOne(15000))
             {
                 if (isFinishDeal)
                 {
                     isFinishDeal = false;
                     throw new FinishDealCardsException();
                 }
-                OnEndSetTarget(this, new EventArgs());
+                else
+                {
+                    OnEndSetTarget(this, new EventArgs());
+                }
             }
             else
             {
@@ -178,14 +190,17 @@ namespace GameCore
         public void DealOneCard()
         {
             OnBeginDealCard(this, new EventArgs());
-            if (autoEvent.WaitOne(15000, false))
+            if (autoEvent.WaitOne(15000))
             {
                 if (isFinishDeal)
                 {
                     isFinishDeal = false;
                     throw new FinishDealCardsException();
                 }
-                OnEndDealCard(this, new EventArgs());
+                else
+                {
+                    OnEndDealCard(this, new EventArgs());
+                }
             }
             else
             {
@@ -207,6 +222,10 @@ namespace GameCore
         {
             isFinishDeal = true;
             autoEvent.Set();
+        }
+        public void DealCardsFinish()
+        {
+            OnDealCardsFinish(this, new EventArgs());
         }
         public void DropCard()
         {

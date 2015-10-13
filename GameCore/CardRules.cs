@@ -10,6 +10,10 @@ namespace GameCore
     {
         public event EventHandler<EventArgs> OnBeginDefend;
         public event EventHandler<EventArgs> OnEndDefend;
+        public event EventHandler<EventArgs> OnDefendResult;
+        public event EventHandler<EventArgs> OnTolerateResult;
+        public event EventHandler<EventArgs> OnDropBlood;
+        public event EventHandler<EventArgs> OnWrongCard;
 
         private GameContext _gctx;
 
@@ -30,7 +34,7 @@ namespace GameCore
             {
                 currentTarget = t;
                 OnBeginDefend?.Invoke(this, new EventArgs());
-                if (_gctx.autoEvent.WaitOne(15000, false) && !IsTolerated)//超时或点击不出牌
+                if (_gctx.autoEvent.WaitOne(15000) && !IsTolerated)//超时或点击不出牌
                 {
                     DefendResult();
                 }
@@ -50,6 +54,10 @@ namespace GameCore
                 currentTarget.Cards.Remove(defenderCard);
                 _gctx.droppedCards.Add(defenderCard);
                 _gctx.autoEvent.Set();
+            }
+            else
+            {
+                OnWrongCard(this, new EventArgs());
             }
         }
         public void Tolerate()
@@ -71,9 +79,11 @@ namespace GameCore
         }
         void TolerateResult()
         {
+            OnTolerateResult(this, new EventArgs());
             if (offenderCard is Acid || offenderCard is Base)
             {
                 currentTarget.DropBlood();
+                OnDropBlood(this, new EventArgs());
             }
             else if (offenderCard is Glucose)
             {
@@ -82,7 +92,7 @@ namespace GameCore
         }
         void DefendResult()
         {
-
+            OnDefendResult(this, new EventArgs());
         }
 
     }

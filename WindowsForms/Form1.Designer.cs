@@ -58,6 +58,7 @@
             this.lbMessage.ItemHeight = 12;
             this.lbMessage.Location = new System.Drawing.Point(23, 12);
             this.lbMessage.Name = "lbMessage";
+            this.lbMessage.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.lbMessage.Size = new System.Drawing.Size(601, 100);
             this.lbMessage.TabIndex = 0;
             // 

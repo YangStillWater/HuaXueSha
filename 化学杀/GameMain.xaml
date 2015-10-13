@@ -45,277 +45,300 @@
       <AssemblyReference>HuaXueSha</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <TryCatch DisplayName="游戏流程" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-      <TryCatch.Try>
-        <Flowchart DisplayName="游戏进行过程" sap2010:WorkflowViewState.IdRef="Flowchart_1">
-          <Flowchart.Variables>
-            <Variable x:TypeArguments="x:String" Name="variable1" />
-          </Flowchart.Variables>
-          <Flowchart.StartNode>
-            <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_16">
-              <InvokeMethod DisplayName="开局发牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_13" MethodName="GameBegin">
-                <InvokeMethod.TargetObject>
-                  <InArgument x:TypeArguments="g:GameContext">
-                    <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                  </InArgument>
-                </InvokeMethod.TargetObject>
-              </InvokeMethod>
-              <FlowStep.Next>
-                <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_4">
-                  <InvokeMethod DisplayName="从第一个人开始" sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="TurnToFirstPlayer">
-                    <InvokeMethod.TargetObject>
-                      <InArgument x:TypeArguments="g:GameContext">
-                        <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                      </InArgument>
-                    </InvokeMethod.TargetObject>
-                  </InvokeMethod>
-                  <FlowStep.Next>
-                    <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_6">
-                      <InvokeMethod DisplayName="准备阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="Prepare">
-                        <InvokeMethod.TargetObject>
-                          <InArgument x:TypeArguments="g:GameContext">
-                            <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                          </InArgument>
-                        </InvokeMethod.TargetObject>
-                      </InvokeMethod>
-                      <FlowStep.Next>
-                        <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_11">
-                          <InvokeMethod DisplayName="判定阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_5" MethodName="Determine">
-                            <InvokeMethod.TargetObject>
-                              <InArgument x:TypeArguments="g:GameContext">
-                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                              </InArgument>
-                            </InvokeMethod.TargetObject>
-                          </InvokeMethod>
-                          <FlowStep.Next>
-                            <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_10">
-                              <InvokeMethod DisplayName="摸牌阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_6" MethodName="GetCards">
-                                <InvokeMethod.TargetObject>
-                                  <InArgument x:TypeArguments="g:GameContext">
-                                    <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                  </InArgument>
-                                </InvokeMethod.TargetObject>
-                              </InvokeMethod>
-                              <FlowStep.Next>
-                                <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_17">
-                                  <TryCatch DisplayName="出牌阶段" sap2010:WorkflowViewState.IdRef="TryCatch_2">
-                                    <TryCatch.Try>
-                                      <While DisplayName="当还有牌则可以出牌" sap2010:WorkflowViewState.IdRef="While_2">
-                                        <While.Condition>
-                                          <mca:CSharpValue x:TypeArguments="x:Boolean">ctx.currentPlayer.Cards.Count &gt; 0</mca:CSharpValue>
-                                        </While.Condition>
-                                        <Sequence DisplayName="出牌" sap2010:WorkflowViewState.IdRef="Sequence_4">
-                                          <InvokeMethod DisplayName="选择一张牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_23" MethodName="SelectOneCard">
-                                            <InvokeMethod.TargetObject>
-                                              <InArgument x:TypeArguments="g:GameContext">
-                                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                              </InArgument>
-                                            </InvokeMethod.TargetObject>
-                                          </InvokeMethod>
-                                          <If DisplayName="是否需要指定目标" sap2010:WorkflowViewState.IdRef="If_2">
-                                            <If.Condition>
-                                              <InArgument x:TypeArguments="x:Boolean">
-                                                <mca:CSharpValue x:TypeArguments="x:Boolean">ctx.currentCard.IsNeedTarget</mca:CSharpValue>
-                                              </InArgument>
-                                            </If.Condition>
-                                            <If.Then>
-                                              <InvokeMethod DisplayName="指定出牌目标" sap2010:WorkflowViewState.IdRef="InvokeMethod_24" MethodName="SetTargets">
-                                                <InvokeMethod.TargetObject>
-                                                  <InArgument x:TypeArguments="g:GameContext">
-                                                    <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                                  </InArgument>
-                                                </InvokeMethod.TargetObject>
-                                              </InvokeMethod>
-                                            </If.Then>
-                                          </If>
-                                          <InvokeMethod DisplayName="出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_27" MethodName="DealOneCard">
-                                            <InvokeMethod.TargetObject>
-                                              <InArgument x:TypeArguments="g:GameContext">
-                                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                              </InArgument>
-                                            </InvokeMethod.TargetObject>
-                                          </InvokeMethod>
-                                          <InvokeMethod DisplayName="应对出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_28" MethodName="Respond">
-                                            <InvokeMethod.TargetObject>
-                                              <InArgument x:TypeArguments="g:GameContext">
-                                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                              </InArgument>
-                                            </InvokeMethod.TargetObject>
-                                          </InvokeMethod>
-                                        </Sequence>
-                                      </While>
-                                    </TryCatch.Try>
-                                    <TryCatch.Catches>
-                                      <Catch x:TypeArguments="g:TimeOutException" sap2010:WorkflowViewState.IdRef="Catch`1_3">
-                                        <ActivityAction x:TypeArguments="g:TimeOutException">
-                                          <ActivityAction.Argument>
-                                            <DelegateInArgument x:TypeArguments="g:TimeOutException" Name="exception" />
-                                          </ActivityAction.Argument>
-                                          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="timeout" />
-                                        </ActivityAction>
-                                      </Catch>
-                                      <Catch x:TypeArguments="g:FinishDealCardsException" sap2010:WorkflowViewState.IdRef="Catch`1_5">
-                                        <ActivityAction x:TypeArguments="g:FinishDealCardsException">
-                                          <ActivityAction.Argument>
-                                            <DelegateInArgument x:TypeArguments="g:FinishDealCardsException" Name="exception" />
-                                          </ActivityAction.Argument>
-                                          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="finish" />
-                                        </ActivityAction>
-                                      </Catch>
-                                    </TryCatch.Catches>
-                                  </TryCatch>
-                                  <FlowStep.Next>
-                                    <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_9">
-                                      <InvokeMethod DisplayName="弃牌阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_8" MethodName="DropCard">
-                                        <InvokeMethod.TargetObject>
-                                          <InArgument x:TypeArguments="g:GameContext">
-                                            <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                          </InArgument>
-                                        </InvokeMethod.TargetObject>
-                                      </InvokeMethod>
-                                      <FlowStep.Next>
-                                        <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_8">
-                                          <InvokeMethod DisplayName="结束阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_9" MethodName="RoundEnd">
-                                            <InvokeMethod.TargetObject>
-                                              <InArgument x:TypeArguments="g:GameContext">
-                                                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                              </InArgument>
-                                            </InvokeMethod.TargetObject>
-                                          </InvokeMethod>
-                                          <FlowStep.Next>
-                                            <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_15">
-                                              <InvokeMethod DisplayName="轮到下一个人" sap2010:WorkflowViewState.IdRef="InvokeMethod_14" MethodName="TurnToNextPlayer">
-                                                <InvokeMethod.TargetObject>
-                                                  <InArgument x:TypeArguments="g:GameContext">
-                                                    <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-                                                  </InArgument>
-                                                </InvokeMethod.TargetObject>
-                                              </InvokeMethod>
-                                              <FlowStep.Next>
-                                                <x:Reference>__ReferenceID0</x:Reference>
-                                              </FlowStep.Next>
-                                            </FlowStep>
-                                          </FlowStep.Next>
-                                        </FlowStep>
-                                      </FlowStep.Next>
-                                    </FlowStep>
-                                  </FlowStep.Next>
-                                </FlowStep>
-                              </FlowStep.Next>
-                            </FlowStep>
-                          </FlowStep.Next>
-                        </FlowStep>
-                      </FlowStep.Next>
-                    </FlowStep>
-                  </FlowStep.Next>
-                </FlowStep>
-              </FlowStep.Next>
-            </FlowStep>
-          </Flowchart.StartNode>
-          <x:Reference>__ReferenceID1</x:Reference>
-          <x:Reference>__ReferenceID0</x:Reference>
-          <x:Reference>__ReferenceID2</x:Reference>
-          <x:Reference>__ReferenceID3</x:Reference>
-          <x:Reference>__ReferenceID4</x:Reference>
-          <x:Reference>__ReferenceID5</x:Reference>
-          <x:Reference>__ReferenceID6</x:Reference>
-          <x:Reference>__ReferenceID7</x:Reference>
-          <x:Reference>__ReferenceID8</x:Reference>
-        </Flowchart>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="g:GameOverException" sap2010:WorkflowViewState.IdRef="Catch`1_4">
-          <ActivityAction x:TypeArguments="g:GameOverException">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="g:GameOverException" Name="exception" />
-            </ActivityAction.Argument>
-            <InvokeMethod DisplayName="游戏结束" sap2010:WorkflowViewState.IdRef="InvokeMethod_17" MethodName="GameOver">
+  <TryCatch DisplayName="游戏流程" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+    <TryCatch.Try>
+      <Flowchart DisplayName="游戏进行过程" sap2010:WorkflowViewState.IdRef="Flowchart_2">
+        <Flowchart.Variables>
+          <Variable x:TypeArguments="x:String" Name="variable1" />
+        </Flowchart.Variables>
+        <Flowchart.StartNode>
+          <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_26">
+            <InvokeMethod DisplayName="开局发牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_29" MethodName="GameBegin">
               <InvokeMethod.TargetObject>
                 <InArgument x:TypeArguments="g:GameContext">
                   <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
                 </InArgument>
               </InvokeMethod.TargetObject>
             </InvokeMethod>
-          </ActivityAction>
-        </Catch>
-      </TryCatch.Catches>
-      <TryCatch.Finally>
-        <InvokeMethod DisplayName="游戏结束" sap2010:WorkflowViewState.IdRef="InvokeMethod_18" MethodName="GameOver">
-          <InvokeMethod.TargetObject>
-            <InArgument x:TypeArguments="g:GameContext">
-              <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
-            </InArgument>
-          </InvokeMethod.TargetObject>
-        </InvokeMethod>
-      </TryCatch.Finally>
-    </TryCatch>
-    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sKTAD/gEOAgEBMQX8ARACAQIzCeEBFQIBCvQBCfoBGAIBB+kBDe8BHAIBAzkPPx4CAUVCE0giAgFBSxdRJgIBPVQbWioCATldH2MuAgE1ZiOnAS4CAReqASewATYCAROzASu5AToCAQ+8AS/CAT4CAQv3AQ/3AVUCAQjsARPsAVkCAQQ8FTxbAgFGRRlFXwIBQk4dTmMCAT5XIVdnAgE6YCVgawIBNmgnkwEvAgEcmwErmwF1AgEaowErowF0AgEYrQEtrQFzAgEUtgExtgF3AgEQvwE1vwF7AgEMbCmSATQCASBqK2qOAQIBHZsBaZsBcgIBG6MBaaMBcQIBGW0rczoCATF0K4MBMAIBKYQBK4oBOgIBJYsBK5EBOgIBIXAxcHcCATJ3MXeMAQIBKnsvgQE+AgEthwExhwF3AgEmjgExjgF3AgEifjV+ewIBLg==</sads:DebugSymbol.Symbol>
-  </Sequence>
+            <FlowStep.Next>
+              <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_25">
+                <InvokeMethod DisplayName="从第一个人开始" sap2010:WorkflowViewState.IdRef="InvokeMethod_30" MethodName="TurnToFirstPlayer">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="g:GameContext">
+                      <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                    </InArgument>
+                  </InvokeMethod.TargetObject>
+                </InvokeMethod>
+                <FlowStep.Next>
+                  <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_24">
+                    <InvokeMethod DisplayName="准备阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_31" MethodName="Prepare">
+                      <InvokeMethod.TargetObject>
+                        <InArgument x:TypeArguments="g:GameContext">
+                          <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                        </InArgument>
+                      </InvokeMethod.TargetObject>
+                    </InvokeMethod>
+                    <FlowStep.Next>
+                      <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_23">
+                        <InvokeMethod DisplayName="判定阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_32" MethodName="Determine">
+                          <InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="g:GameContext">
+                              <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                            </InArgument>
+                          </InvokeMethod.TargetObject>
+                        </InvokeMethod>
+                        <FlowStep.Next>
+                          <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_22">
+                            <InvokeMethod DisplayName="摸牌阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_33" MethodName="GetCards">
+                              <InvokeMethod.TargetObject>
+                                <InArgument x:TypeArguments="g:GameContext">
+                                  <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                </InArgument>
+                              </InvokeMethod.TargetObject>
+                            </InvokeMethod>
+                            <FlowStep.Next>
+                              <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_21">
+                                <TryCatch DisplayName="出牌阶段" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                                  <TryCatch.Try>
+                                    <While DisplayName="当还有牌则可以出牌" sap2010:WorkflowViewState.IdRef="While_3">
+                                      <While.Condition>
+                                        <mca:CSharpValue x:TypeArguments="x:Boolean">ctx.currentPlayer.Cards.Count &gt; 0</mca:CSharpValue>
+                                      </While.Condition>
+                                      <Sequence DisplayName="出牌" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                        <InvokeMethod DisplayName="选择一张牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_34" MethodName="SelectOneCard">
+                                          <InvokeMethod.TargetObject>
+                                            <InArgument x:TypeArguments="g:GameContext">
+                                              <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                            </InArgument>
+                                          </InvokeMethod.TargetObject>
+                                        </InvokeMethod>
+                                        <If DisplayName="是否需要指定目标" sap2010:WorkflowViewState.IdRef="If_3">
+                                          <If.Condition>
+                                            <InArgument x:TypeArguments="x:Boolean">
+                                              <mca:CSharpValue x:TypeArguments="x:Boolean">ctx.currentCard.IsNeedTarget</mca:CSharpValue>
+                                            </InArgument>
+                                          </If.Condition>
+                                          <If.Then>
+                                            <InvokeMethod DisplayName="指定出牌目标" sap2010:WorkflowViewState.IdRef="InvokeMethod_35" MethodName="SetTargets">
+                                              <InvokeMethod.TargetObject>
+                                                <InArgument x:TypeArguments="g:GameContext">
+                                                  <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                                </InArgument>
+                                              </InvokeMethod.TargetObject>
+                                            </InvokeMethod>
+                                          </If.Then>
+                                        </If>
+                                        <InvokeMethod DisplayName="出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_36" MethodName="DealOneCard">
+                                          <InvokeMethod.TargetObject>
+                                            <InArgument x:TypeArguments="g:GameContext">
+                                              <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                            </InArgument>
+                                          </InvokeMethod.TargetObject>
+                                        </InvokeMethod>
+                                        <InvokeMethod DisplayName="应对出牌" sap2010:WorkflowViewState.IdRef="InvokeMethod_37" MethodName="Respond">
+                                          <InvokeMethod.TargetObject>
+                                            <InArgument x:TypeArguments="g:GameContext">
+                                              <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                            </InArgument>
+                                          </InvokeMethod.TargetObject>
+                                        </InvokeMethod>
+                                      </Sequence>
+                                    </While>
+                                  </TryCatch.Try>
+                                  <TryCatch.Catches>
+                                    <Catch x:TypeArguments="g:TimeOutException" sap2010:WorkflowViewState.IdRef="Catch`1_6">
+                                      <ActivityAction x:TypeArguments="g:TimeOutException">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="g:TimeOutException" Name="exception" />
+                                        </ActivityAction.Argument>
+                                        <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="timeout" />
+                                      </ActivityAction>
+                                    </Catch>
+                                    <Catch x:TypeArguments="g:FinishDealCardsException" sap2010:WorkflowViewState.IdRef="Catch`1_7">
+                                      <ActivityAction x:TypeArguments="g:FinishDealCardsException">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="g:FinishDealCardsException" Name="exception" />
+                                        </ActivityAction.Argument>
+                                        <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="finish" />
+                                      </ActivityAction>
+                                    </Catch>
+                                  </TryCatch.Catches>
+                                  <TryCatch.Finally>
+                                    <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_43" MethodName="DealCardsFinish">
+                                      <InvokeMethod.TargetObject>
+                                        <InArgument x:TypeArguments="g:GameContext">
+                                          <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                        </InArgument>
+                                      </InvokeMethod.TargetObject>
+                                    </InvokeMethod>
+                                  </TryCatch.Finally>
+                                </TryCatch>
+                                <FlowStep.Next>
+                                  <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_20">
+                                    <InvokeMethod DisplayName="弃牌阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_38" MethodName="DropCard">
+                                      <InvokeMethod.TargetObject>
+                                        <InArgument x:TypeArguments="g:GameContext">
+                                          <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                        </InArgument>
+                                      </InvokeMethod.TargetObject>
+                                    </InvokeMethod>
+                                    <FlowStep.Next>
+                                      <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_19">
+                                        <InvokeMethod DisplayName="结束阶段" sap2010:WorkflowViewState.IdRef="InvokeMethod_39" MethodName="RoundEnd">
+                                          <InvokeMethod.TargetObject>
+                                            <InArgument x:TypeArguments="g:GameContext">
+                                              <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                            </InArgument>
+                                          </InvokeMethod.TargetObject>
+                                        </InvokeMethod>
+                                        <FlowStep.Next>
+                                          <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_18">
+                                            <InvokeMethod DisplayName="轮到下一个人" sap2010:WorkflowViewState.IdRef="InvokeMethod_40" MethodName="TurnToNextPlayer">
+                                              <InvokeMethod.TargetObject>
+                                                <InArgument x:TypeArguments="g:GameContext">
+                                                  <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+                                                </InArgument>
+                                              </InvokeMethod.TargetObject>
+                                            </InvokeMethod>
+                                            <FlowStep.Next>
+                                              <x:Reference>__ReferenceID0</x:Reference>
+                                            </FlowStep.Next>
+                                          </FlowStep>
+                                        </FlowStep.Next>
+                                      </FlowStep>
+                                    </FlowStep.Next>
+                                  </FlowStep>
+                                </FlowStep.Next>
+                              </FlowStep>
+                            </FlowStep.Next>
+                          </FlowStep>
+                        </FlowStep.Next>
+                      </FlowStep>
+                    </FlowStep.Next>
+                  </FlowStep>
+                </FlowStep.Next>
+              </FlowStep>
+            </FlowStep.Next>
+          </FlowStep>
+        </Flowchart.StartNode>
+        <x:Reference>__ReferenceID1</x:Reference>
+        <x:Reference>__ReferenceID0</x:Reference>
+        <x:Reference>__ReferenceID2</x:Reference>
+        <x:Reference>__ReferenceID3</x:Reference>
+        <x:Reference>__ReferenceID4</x:Reference>
+        <x:Reference>__ReferenceID5</x:Reference>
+        <x:Reference>__ReferenceID6</x:Reference>
+        <x:Reference>__ReferenceID7</x:Reference>
+        <x:Reference>__ReferenceID8</x:Reference>
+      </Flowchart>
+    </TryCatch.Try>
+    <TryCatch.Catches>
+      <Catch x:TypeArguments="g:GameOverException" sap2010:WorkflowViewState.IdRef="Catch`1_8">
+        <ActivityAction x:TypeArguments="g:GameOverException">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="g:GameOverException" Name="exception" />
+          </ActivityAction.Argument>
+          <InvokeMethod DisplayName="游戏结束" sap2010:WorkflowViewState.IdRef="InvokeMethod_41" MethodName="GameOver">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="g:GameContext">
+                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+              </InArgument>
+            </InvokeMethod.TargetObject>
+          </InvokeMethod>
+        </ActivityAction>
+      </Catch>
+      <Catch x:TypeArguments="g:PlayerDeadException">
+        <ActivityAction x:TypeArguments="g:PlayerDeadException">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="g:PlayerDeadException" Name="exception" />
+          </ActivityAction.Argument>
+          <InvokeMethod DisplayName="游戏结束" MethodName="GameOver">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="g:GameContext">
+                <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+              </InArgument>
+            </InvokeMethod.TargetObject>
+            <sap2010:WorkflowViewState.IdRef>InvokeMethod_44</sap2010:WorkflowViewState.IdRef>
+          </InvokeMethod>
+        </ActivityAction>
+        <sap2010:WorkflowViewState.IdRef>Catch`1_9</sap2010:WorkflowViewState.IdRef>
+      </Catch>
+    </TryCatch.Catches>
+    <TryCatch.Finally>
+      <InvokeMethod DisplayName="游戏结束" sap2010:WorkflowViewState.IdRef="InvokeMethod_42" MethodName="GameOver">
+        <InvokeMethod.TargetObject>
+          <InArgument x:TypeArguments="g:GameContext">
+            <mca:CSharpValue x:TypeArguments="g:GameContext">ctx</mca:CSharpValue>
+          </InArgument>
+        </InvokeMethod.TargetObject>
+      </InvokeMethod>
+    </TryCatch.Finally>
+    <sads:DebugSymbol.Symbol>d15GOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xWaXN1YWwgU3R1ZGlvIDIwMTVcUHJvamVjdHNcSHVhWHVlU2hhXOWMluWtpuadgFxHYW1lTWFpbi54YW1sLDADlQIOAgEBMgfpARMCAQ2MAgeSAhYCAQrxAQv3ARoCAQb/AQuGAhoCAQI4DT4cAgFMQRFHIAIBSEoVUCQCAURTGVkoAgFAXB1iLAIBPGUhrwEsAgEasgEluAE0AgEWuwEpwQE4AgESxAEtygE8AgEOjwINjwJTAgEL9AER9AFXAgEHggIRggJXAgEDOxM7WQIBTUQXRF0CAUlNG01hAgFFVh9WZQIBQV8jX2kCAT1nJZIBLQIBI6cBJa0BNAIBH5oBKZoBcwIBHaIBKaIBcgIBG7UBK7UBcQIBF74BL74BdQIBE8cBM8cBeQIBD2snkQEyAgEnaSlpjAECASSqASuqAXECASCaAWeaAXACAR6iAWeiAW8CARxsKXI4AgE4cymCAS4CATCDASmJATgCASyKASmQATgCAShvL291AgE5di92igECATF6LYABPAIBNIYBL4YBdQIBLY0BL40BdQIBKX0zfXkCATU=</sads:DebugSymbol.Symbol>
+  </TryCatch>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="InvokeMethod_13" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_29" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_2" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_30" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_4" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_31" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_5" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_32" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_6" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_33" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_23" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_34" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_24" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_35" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="225,53" />
-      <sap2010:ViewStateData Id="InvokeMethod_27" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="InvokeMethod_28" sap:VirtualizedContainerService.HintSize="225,133" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="247,696">
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="225,53" />
+      <sap2010:ViewStateData Id="InvokeMethod_36" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="InvokeMethod_37" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="247,696">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="While_2" sap:VirtualizedContainerService.HintSize="464,223" />
-      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
-      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="404,23">
+      <sap2010:ViewStateData Id="While_3" sap:VirtualizedContainerService.HintSize="200,53" />
+      <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Catch`1_6" sap:VirtualizedContainerService.HintSize="404,23">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -323,8 +346,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
-      <sap2010:ViewStateData Id="Catch`1_5" sap:VirtualizedContainerService.HintSize="404,23">
+      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Catch`1_7" sap:VirtualizedContainerService.HintSize="404,23">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -332,35 +355,36 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,321">
+      <sap2010:ViewStateData Id="InvokeMethod_43" sap:VirtualizedContainerService.HintSize="225,133" />
+      <sap2010:ViewStateData Id="TryCatch_3" sap:VirtualizedContainerService.HintSize="418,394">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_8" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_38" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_9" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_39" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_14" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_40" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_15">
+      <sap2010:ViewStateData Id="FlowStep_18">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">717.5,493.5</av:Point>
@@ -369,7 +393,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_8">
+      <sap2010:ViewStateData Id="FlowStep_19">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">717.5,673.5</av:Point>
@@ -378,7 +402,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_9">
+      <sap2010:ViewStateData Id="FlowStep_20">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">717.5,863.5</av:Point>
@@ -387,7 +411,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_17">
+      <sap2010:ViewStateData Id="FlowStep_21">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">570,1103.5</av:Point>
@@ -396,7 +420,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_10">
+      <sap2010:ViewStateData Id="FlowStep_22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">357.5,866.5</av:Point>
@@ -405,7 +429,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_11">
+      <sap2010:ViewStateData Id="FlowStep_23">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">357.5,683.5</av:Point>
@@ -414,7 +438,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_6">
+      <sap2010:ViewStateData Id="FlowStep_24">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">358.356666666666,493.5</av:Point>
@@ -423,7 +447,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_4">
+      <sap2010:ViewStateData Id="FlowStep_25">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">357.928333333333,310.5</av:Point>
@@ -432,7 +456,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_16">
+      <sap2010:ViewStateData Id="FlowStep_26">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">357.5,127.5</av:Point>
@@ -441,7 +465,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="1236,2314">
+      <sap2010:ViewStateData Id="Flowchart_2" sap:VirtualizedContainerService.HintSize="200,53">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -454,14 +478,29 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_17" sap:VirtualizedContainerService.HintSize="225,135">
+      <sap2010:ViewStateData Id="InvokeMethod_41" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_4" sap:VirtualizedContainerService.HintSize="404,23">
+      <sap2010:ViewStateData Id="Catch`1_8" sap:VirtualizedContainerService.HintSize="400,23">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_44" sap:VirtualizedContainerService.HintSize="225,133">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_9" sap:VirtualizedContainerService.HintSize="400,23">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -469,22 +508,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeMethod_18" sap:VirtualizedContainerService.HintSize="225,133">
+      <sap2010:ViewStateData Id="InvokeMethod_42" sap:VirtualizedContainerService.HintSize="225,133">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="1254,2728" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="1276,2852">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="HuaXueSha.GameMain_1" sap:VirtualizedContainerService.HintSize="1316,2932">
+      <sap2010:ViewStateData Id="TryCatch_4" sap:VirtualizedContainerService.HintSize="414,217" />
+      <sap2010:ViewStateData Id="HuaXueSha.GameMain_1" sap:VirtualizedContainerService.HintSize="458,377">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>

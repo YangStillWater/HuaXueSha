@@ -49,6 +49,7 @@ namespace WindowsForms
         {
             cardsSource.ResetBindings(true);
             lblBlood.Text = Player.Blood.ToString();
+            lbCards.ClearSelected();
         }
     }
 }
