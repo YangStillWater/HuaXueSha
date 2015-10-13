@@ -21,25 +21,34 @@ namespace GameCore
         public List<Player> players = new List<Player>();
         public Player currentPlayer;
         public Card currentCard;
+
         public List<Player> targets = new List<Player>();
+
+        public List<Card> dealedCardsInTurn = new List<Card>();
 
         public event EventHandler<EventArgs> OnBeginPrepareCards;
         public event EventHandler<EventArgs> OnEndPrepareCards;
+
         public event EventHandler<EventArgs> OnBeginGetCards;
         public event EventHandler<EventArgs> OnEndGetCards;
+
         public event EventHandler<EventArgs> OnBeginSelectOneCard;
+        public event EventHandler<EventArgs> OnCannotSelectThisCard;
         public event EventHandler<EventArgs> OnEndSelectOneCard;
+
         public event EventHandler<EventArgs> OnBeginSetTarget;
         public event EventHandler<EventArgs> OnEndSetTarget;
+
         public event EventHandler<EventArgs> OnBeginDealCard;
         public event EventHandler<EventArgs> OnEndDealCard;
         public event EventHandler<EventArgs> OnDealCardsFinish;
+
         public event EventHandler<EventArgs> OnGameOver;
 
         public int round = 1;//第几轮
         public AutoResetEvent autoEvent = new AutoResetEvent(false);
-        public bool isOnSelectingCard = false;
         public bool isFinishDeal = false;
+        public GameState State;
 
         public CardRules Rules;
 
@@ -111,14 +120,15 @@ namespace GameCore
         }
         public void Prepare()
         {
-
+            State = GameState.OnPrepare;
         }
         public void Determine()
         {
-
+            State = GameState.OnDetermine;
         }
         public void GetCards()
         {
+            State = GameState.OnGetCards;
             OnBeginGetCards(this, new EventArgs());
             for (int i = 0; i < currentPlayer.CardCountToGet; i++)
             {
@@ -132,12 +142,11 @@ namespace GameCore
         }
         public void SelectOneCard()
         {
+            State = GameState.OnSelectCard;
             targets.Clear();
-            isOnSelectingCard = true;
             OnBeginSelectOneCard(this, new EventArgs());
             if (autoEvent.WaitOne(15000))
             {
-                isOnSelectingCard = false;
                 if (isFinishDeal)
                 {
                     isFinishDeal = false;
@@ -147,20 +156,28 @@ namespace GameCore
             }
             else
             {
-                isOnSelectingCard = false;
                 throw new TimeOutException();
             }
         }
         public void SelectThisOneCard(int cardIndex)
         {
-            if (isOnSelectingCard)
+            if (State==GameState.OnSelectCard)
             {
-                currentCard = currentPlayer.Cards[cardIndex];
-                autoEvent.Set(); 
+                var card = currentPlayer.Cards[cardIndex];
+                if (dealedCardsInTurn.Any(c => c is Acid || c is Base) && (card is Acid || card is Base))
+                {
+                    OnCannotSelectThisCard(this, new EventArgs());
+                }
+                else
+                {
+                    currentCard = card;
+                    autoEvent.Set();  
+                }
             }
         }
         public void SetTargets()
         {
+            State = GameState.OnSetTargets;
             OnBeginSetTarget(this, new EventArgs());
             if (autoEvent.WaitOne(15000))
             {
@@ -181,14 +198,18 @@ namespace GameCore
         }
         public void SetTheTargets(int[] playerIndexes)
         {
-            foreach (int i in playerIndexes)
+            if (State==GameState.OnSetTargets)
             {
-                targets.Add(players[i]);
+                foreach (int i in playerIndexes)
+                {
+                    targets.Add(players[i]);
+                }
+                autoEvent.Set(); 
             }
-            autoEvent.Set();
         }
         public void DealOneCard()
         {
+            State = GameState.OnDealCard;
             OnBeginDealCard(this, new EventArgs());
             if (autoEvent.WaitOne(15000))
             {
@@ -209,9 +230,13 @@ namespace GameCore
         }
         public void DealThisOneCard(int cardIndex)
         {
-            currentPlayer.Cards.Remove(currentCard);
-            droppedCards.Add(currentCard);
-            autoEvent.Set();
+            if (State == GameState.OnDealCard)
+            {
+                currentPlayer.Cards.Remove(currentCard);
+                droppedCards.Add(currentCard);
+                dealedCardsInTurn.Add(currentCard);
+                autoEvent.Set(); 
+            }
         }
         public void Respond()
         {
@@ -229,7 +254,7 @@ namespace GameCore
         }
         public void DropCard()
         {
-
+            dealedCardsInTurn.Clear();
         }
         public void RoundEnd()
         {
@@ -256,4 +281,15 @@ namespace GameCore
         #endregion
     }
 
+    public enum GameState
+    {
+        OnPrepare,
+        OnDetermine,
+        OnGetCards,
+        OnSelectCard,
+        OnSetTargets,
+        OnDealCard,
+        OnRespond,
+        OnDropCard,
+    }
 }

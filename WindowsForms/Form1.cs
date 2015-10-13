@@ -95,6 +95,10 @@ namespace WindowsForms
                     AddMessage($"玩家{gCtx.currentPlayer.name}选择了牌{gCtx.currentCard}");
                 }));
             };
+            gCtx.OnCannotSelectThisCard += delegate {
+                InvokeAddMessage($"玩家{gCtx.currentPlayer.name}出一次酸或碱之后就不能再出了");
+            };
+
             gCtx.OnBeginSetTarget += delegate
             {
                 this.Invoke(new Action(() =>
