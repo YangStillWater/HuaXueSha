@@ -95,5 +95,9 @@ namespace GameCore
             OnDefendResult(this, new EventArgs());
         }
 
+        public void DropExtraCards()
+        {
+
+        }
     }
 }

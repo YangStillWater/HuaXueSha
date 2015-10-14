@@ -30,5 +30,40 @@ namespace YangPeng.Extensions
             int index = new Random().Next(list.Count);
             return list[index];
         }
+
+        public static void MoveTo<TSource>(this List<TSource> listFrom, List<TSource> listTo, TSource item)
+        {
+            if (listFrom.Remove(item))
+            {
+                listTo.Add(item); 
+            }
+        }
+        public static void MoveTo<TSource>(this List<TSource> listFrom, List<TSource> listTo, int indexFrom)
+        {
+            TSource item = listFrom[indexFrom];
+            listFrom.MoveTo(listTo, item);
+        }
+        public static void MoveRangeTo<TSource>(this List<TSource> listFrom, List<TSource> listTo, List<TSource> items)
+        {
+            foreach (TSource i in items)
+            {
+                listFrom.MoveTo(listTo, i);
+            }
+        }
+        public static void MoveRangeTo<TSource>(this List<TSource> listFrom, List<TSource> listTo, int[] indexesFrom)
+        {
+            var items = new List<TSource>(indexesFrom.Length);
+            foreach (int i in indexesFrom)
+            {
+                items.Add(listFrom[i]);
+            }
+            listFrom.MoveRangeTo(listTo, items);
+        }
+        public static void MoveRangeTo<TSource>(this List<TSource> listFrom, List<TSource> listTo, int indexBegin,int count)
+        {
+            var items = listFrom.GetRange(indexBegin, count);
+            listFrom.MoveRangeTo(listTo, items);
+        }
+
     }
 }

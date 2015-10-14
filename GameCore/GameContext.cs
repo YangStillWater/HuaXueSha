@@ -43,6 +43,10 @@ namespace GameCore
         public event EventHandler<EventArgs> OnEndDealCard;
         public event EventHandler<EventArgs> OnDealCardsFinish;
 
+        public event EventHandler<EventArgs> OnBeginDropCard;
+        public event EventHandler<EventArgs> OnCardsDropped;
+        public event EventHandler<EventArgs> OnEndDropCard;
+
         public event EventHandler<EventArgs> OnGameOver;
 
         public int round = 1;//第几轮
@@ -51,6 +55,8 @@ namespace GameCore
         public GameState State;
 
         public CardRules Rules;
+
+        public int CardsCountToDrop => currentPlayer.Cards.Count - currentPlayer.Blood;
 
         public GameContext()
         {
@@ -228,7 +234,7 @@ namespace GameCore
                 throw new TimeOutException();
             }
         }
-        public void DealThisOneCard(int cardIndex)
+        public void DealThisOneCard()
         {
             if (State == GameState.OnDealCard)
             {
@@ -252,9 +258,31 @@ namespace GameCore
         {
             OnDealCardsFinish(this, new EventArgs());
         }
-        public void DropCard()
+        public void DropCards()
         {
+            State = GameState.OnDropCards;
             dealedCardsInTurn.Clear();
+            OnBeginDropCard?.Invoke(this, new EventArgs());
+            if (autoEvent.WaitOne(15000))
+            {
+            }
+            else
+            {
+                currentPlayer.Cards.MoveRangeTo(droppedCards, 0, CardsCountToDrop);
+            }
+            OnEndDropCard?.Invoke(this, new EventArgs());
+        }
+        public void DropTheCards(int[] cardIndexes)
+        {
+            if (State == GameState.OnDropCards)
+            {
+                currentPlayer.Cards.MoveRangeTo(droppedCards, cardIndexes);
+                OnCardsDropped?.Invoke(this, new EventArgs());
+                if (currentPlayer.Cards.Count<=currentPlayer.Blood)
+                {
+                    autoEvent.Set(); 
+                }
+            }
         }
         public void RoundEnd()
         {
@@ -290,6 +318,6 @@ namespace GameCore
         OnSetTargets,
         OnDealCard,
         OnRespond,
-        OnDropCard,
+        OnDropCards,
     }
 }

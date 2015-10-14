@@ -83,6 +83,7 @@ namespace WindowsForms
                 {
                     panelDealCard.Show();
                     lblSelectCard.Show();
+                    currentLbCards.SelectionMode = SelectionMode.One;
 
                     AddMessage($"轮到玩家{gCtx.currentPlayer.name}出牌");
                 }));
@@ -92,6 +93,7 @@ namespace WindowsForms
                 this.Invoke(new Action(() =>
                 {
                     lblSelectCard.Hide();
+                    currentLbCards.SelectionMode = SelectionMode.None;
                     AddMessage($"玩家{gCtx.currentPlayer.name}选择了牌{gCtx.currentCard}");
                 }));
             };
@@ -133,8 +135,39 @@ namespace WindowsForms
             };
 
             gCtx.OnDealCardsFinish += delegate {
-                InvokeAddMessage($"玩家{gCtx.currentPlayer.name}出牌结束");
+                this.Invoke(new Action(() =>
+                {
+                    AddMessage($"玩家{gCtx.currentPlayer.name}出牌结束");
+                    panelDealCard.Hide();
+                }));
             };
+
+            gCtx.OnBeginDropCard += delegate
+            {
+                this.Invoke(new Action(() =>
+                {
+                    panelDrop.Show();
+                    currentLbCards.SelectionMode = SelectionMode.MultiSimple;
+                    AddMessage($"玩家{gCtx.currentPlayer.name}请弃掉{gCtx.CardsCountToDrop}张牌");
+                }));
+            };
+            gCtx.OnEndDropCard += delegate {
+                this.Invoke(new Action(() =>
+                {
+                    AddMessage($"玩家{gCtx.currentPlayer.name}弃牌结束");
+                    panelDrop.Hide();
+                    currentLbCards.SelectionMode = SelectionMode.None;
+                    Synchronize();
+                }));
+            };
+            gCtx.OnCardsDropped += delegate {
+                this.Invoke(new Action(() =>
+                {
+                    AddMessage($"玩家{gCtx.currentPlayer.name}弃牌");
+                    Synchronize();
+                }));
+            };
+
 
             gCtx.OnGameOver += delegate {
                 this.Invoke(new Action(() =>
@@ -252,7 +285,7 @@ namespace WindowsForms
 
         private void btnDealCard_Click(object sender, EventArgs e)
         {
-            gCtx.DealThisOneCard(currentLbCards.SelectedIndex);
+            gCtx.DealThisOneCard();
         }
 
         private void bntFinishDeal_Click(object sender, EventArgs e)
@@ -272,7 +305,7 @@ namespace WindowsForms
 
         private void btnDrop_Click(object sender, EventArgs e)
         {
-
+            gCtx.DropTheCards(currentLbCards.SelectedIndices.Cast<int>().ToArray());
         }
         #endregion
     }
