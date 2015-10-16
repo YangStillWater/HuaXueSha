@@ -94,7 +94,7 @@ namespace WindowsForms
                 {
                     lblSelectCard.Hide();
                     currentLbCards.SelectionMode = SelectionMode.None;
-                    AddMessage($"玩家{gCtx.currentPlayer.name}选择了牌{gCtx.currentCard}");
+                    AddMessage($"玩家{gCtx.currentPlayer.name}选择了牌{string.Join(",", gCtx.cardDress.ActualCards)}");
                 }));
             };
             gCtx.OnCannotSelectThisCard += delegate {
@@ -128,7 +128,7 @@ namespace WindowsForms
             gCtx.OnEndDealCard += delegate {
                 this.Invoke(new Action(() =>
                 {
-                    AddMessage($"玩家{gCtx.currentPlayer.name}对玩家{string.Join(",", gCtx.targets.Select(t => t.name))}出牌{gCtx.currentCard}");
+                    AddMessage($"玩家{gCtx.currentPlayer.name}对玩家{string.Join(",", gCtx.targets.Select(t => t.name))}出牌{string.Join(",", gCtx.cardDress.ActualCards)}");
                     panelDealCard.Hide();
                     Synchronize();
                 }));
@@ -183,6 +183,7 @@ namespace WindowsForms
                   this.Invoke(new Action(() =>
                   {
                       panelRespond.Show();
+                      currentTargetListBox.SelectionMode = SelectionMode.One;
                       AddMessage($"玩家{gCtx.Rules.currentTarget.name}准备出牌应对");
                   }));
               };
@@ -224,7 +225,7 @@ namespace WindowsForms
         void PlayerSelect(object sender, EventArgs e)
         {
             var pb = sender as PlayerBox;
-            if (pb != currentPlayerBox)
+            if (pb != currentPlayerBox || gCtx.cardDress.VirtualCard is Glucose)
             {
                 pb.BackColor = Color.LightCoral;
                 int index = PlayerBoxes.IndexOf(pb);
@@ -278,8 +279,7 @@ namespace WindowsForms
         #region 按钮事件
         private void btnGameBegin_Click(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(
-   new WaitCallback(WorkMethod), gCtx.autoEvent);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(WorkMethod));
 
         }
 

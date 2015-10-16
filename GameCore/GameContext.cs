@@ -20,7 +20,7 @@ namespace GameCore
         public List<Card> droppedCards = new List<Card>();
         public List<Player> players = new List<Player>();
         public Player currentPlayer;
-        public Card currentCard;
+        public CardDress cardDress;
 
         public List<Player> targets = new List<Player>();
 
@@ -55,6 +55,8 @@ namespace GameCore
         public GameState State;
 
         public CardRules Rules;
+
+        public TurnContext TurnCtx;
 
         public int CardsCountToDrop => currentPlayer.Cards.Count - currentPlayer.Blood;
 
@@ -93,6 +95,7 @@ namespace GameCore
             #region 添加玩家
             players.Add(new Player() { name = "A" });
             players.Add(new Player() { name = "B" });
+            players.Add(new Player() { name = "C" });
             #endregion
 
             Rules = new CardRules(this);
@@ -127,6 +130,7 @@ namespace GameCore
         public void Prepare()
         {
             State = GameState.OnPrepare;
+            TurnCtx = new TurnContext();
         }
         public void Determine()
         {
@@ -151,7 +155,7 @@ namespace GameCore
             State = GameState.OnSelectCard;
             targets.Clear();
             OnBeginSelectOneCard(this, new EventArgs());
-            if (autoEvent.WaitOne(15000))
+            if (cardDress!= null || autoEvent.WaitOne(15000))
             {
                 if (isFinishDeal)
                 {
@@ -167,18 +171,24 @@ namespace GameCore
         }
         public void SelectThisOneCard(int cardIndex)
         {
-            if (State==GameState.OnSelectCard)
+            GameState[] s = new GameState[] { GameState.OnSelectCard, GameState.OnSetTargets, GameState.OnDealCard };
+            if (!s.Contains(State)) return;
+
+            var card = currentPlayer.Cards[cardIndex];
+            if (dealedCardsInTurn.Any(c => c is Acid || c is Base) && (card is Acid || card is Base))
             {
-                var card = currentPlayer.Cards[cardIndex];
-                if (dealedCardsInTurn.Any(c => c is Acid || c is Base) && (card is Acid || card is Base))
-                {
-                    OnCannotSelectThisCard(this, new EventArgs());
-                }
-                else
-                {
-                    currentCard = card;
-                    autoEvent.Set();  
-                }
+                OnCannotSelectThisCard(this, new EventArgs());
+                return;
+            }
+            else cardDress = new CardDress(card);
+
+            if (State == GameState.OnSelectCard)
+            {
+                autoEvent.Set();
+            }
+            else
+            {
+                throw new ReSelectCardException();
             }
         }
         public void SetTargets()
@@ -204,13 +214,13 @@ namespace GameCore
         }
         public void SetTheTargets(int[] playerIndexes)
         {
-            if (State==GameState.OnSetTargets)
+            if (State == GameState.OnSetTargets)
             {
                 foreach (int i in playerIndexes)
                 {
                     targets.Add(players[i]);
                 }
-                autoEvent.Set(); 
+                autoEvent.Set();
             }
         }
         public void DealOneCard()
@@ -226,6 +236,7 @@ namespace GameCore
                 }
                 else
                 {
+                    TurnCtx.NeedReselect = false;
                     OnEndDealCard(this, new EventArgs());
                 }
             }
@@ -238,10 +249,13 @@ namespace GameCore
         {
             if (State == GameState.OnDealCard)
             {
-                currentPlayer.Cards.Remove(currentCard);
-                droppedCards.Add(currentCard);
-                dealedCardsInTurn.Add(currentCard);
-                autoEvent.Set(); 
+                foreach (var c in cardDress.ActualCards)
+                {
+                    currentPlayer.Cards.Remove(c);
+                    droppedCards.Add(c);
+                    dealedCardsInTurn.Add(c);
+                }
+                autoEvent.Set();
             }
         }
         public void Respond()
@@ -261,7 +275,6 @@ namespace GameCore
         public void DropCards()
         {
             State = GameState.OnDropCards;
-            dealedCardsInTurn.Clear();
             OnBeginDropCard?.Invoke(this, new EventArgs());
             if (autoEvent.WaitOne(15000))
             {
@@ -278,15 +291,15 @@ namespace GameCore
             {
                 currentPlayer.Cards.MoveRangeTo(droppedCards, cardIndexes);
                 OnCardsDropped?.Invoke(this, new EventArgs());
-                if (currentPlayer.Cards.Count<=currentPlayer.Blood)
+                if (currentPlayer.Cards.Count <= currentPlayer.Blood)
                 {
-                    autoEvent.Set(); 
+                    autoEvent.Set();
                 }
             }
         }
-        public void RoundEnd()
+        public void TurnEnd()
         {
-
+            dealedCardsInTurn.Clear();
         }
         public void GameOver()
         {

@@ -9,6 +9,13 @@ namespace GameCore
 public  abstract  class Character
     {
         public abstract string Introduction { get; }
+        public virtual void Determine() { }
+        public virtual void GetCards() { }
+        public virtual void SelectOneCard() { }
+        public virtual void SetTargets() { }
+        public virtual void DealOneCard() { }
+        public virtual void Respond() { }
+        public virtual void DropCards() { }
     }
 
     public class 拉瓦锡 : Character

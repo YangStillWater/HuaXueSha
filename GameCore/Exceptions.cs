@@ -18,4 +18,7 @@ namespace GameCore
     public class GameOverException : Exception
     {
     }
+    public class ReSelectCardException : Exception
+    {
+    }
 }

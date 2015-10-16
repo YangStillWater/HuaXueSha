@@ -23,13 +23,15 @@ namespace GameCore
 
         public bool IsTolerated = false;
 
+        public bool IsKitEnable = true;
+
         public CardRules(GameContext context)
         {
             _gctx = context;
         }
         public void Respond()
         {
-            offenderCard = _gctx.currentCard;
+            offenderCard = _gctx.cardDress.VirtualCard;
             foreach (var t in _gctx.targets)
             {
                 currentTarget = t;
@@ -71,21 +73,40 @@ namespace GameCore
             {
                 return defender is Base;
             }
-            if (offender is Base)
+            else if (offender is Base)
             {
                 return defender is Acid;
+            }
+            else if (offender is KitCard)
+            {
+                return defender is EDTA;
             }
             return false;
         }
         void TolerateResult()
         {
             OnTolerateResult(this, new EventArgs());
-            if (offenderCard is Acid || offenderCard is Base)
+            if (offenderCard is Acid)
+            {
+                currentTarget.DropBlood(_gctx.TurnCtx.AcidDropBloodNum);
+                OnDropBlood(this, new EventArgs());
+            }
+            else if (offenderCard is Base)
             {
                 currentTarget.DropBlood();
                 OnDropBlood(this, new EventArgs());
             }
-            else if (offenderCard is Glucose)
+            else if (offenderCard is 重铬酸钾)
+            {
+                _gctx.TurnCtx.AcidDropBloodNum = 2;
+            }
+        }
+        public void PlainResult()
+        {
+            currentTarget = _gctx.targets.First();
+
+            OnTolerateResult(this, new EventArgs());
+            if (offenderCard is Glucose)
             {
                 currentTarget.AddBlood();
             }
