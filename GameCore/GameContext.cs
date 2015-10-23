@@ -62,6 +62,23 @@ namespace GameCore
 
         public GameContext()
         {
+            Init();
+
+            #region 添加玩家
+            players.Add(new Player() { name = "A" });
+            players.Add(new Player() { name = "B" });
+            players.Add(new Player() { name = "C" });
+            #endregion
+        }
+
+        public GameContext(List<Player> playerlist)
+        {
+            Init();
+            players = playerlist;
+        }
+
+        void Init()
+        {
             #region 添加牌
             AddCards(new Acid(), 24);
             AddCards(new Base(), 24);
@@ -92,14 +109,9 @@ namespace GameCore
             AddCards(new 络合滴定(), 1);
             #endregion
 
-            #region 添加玩家
-            players.Add(new Player() { name = "A" });
-            players.Add(new Player() { name = "B" });
-            players.Add(new Player() { name = "C" });
-            #endregion
-
             Rules = new CardRules(this);
         }
+
         public void GameBegin()
         {
             OnBeginPrepareCards(this, new EventArgs());

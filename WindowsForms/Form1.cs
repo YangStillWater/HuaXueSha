@@ -16,7 +16,9 @@ namespace WindowsForms
 {
     public partial class Form1 : Form
     {
-        GameContext gCtx = new GameContext();
+        GameContext gCtx;
+
+        public List<Player> playerlist;
         PlayerBox currentPlayerBox
         {
             get
@@ -58,7 +60,12 @@ namespace WindowsForms
         public Form1()
         {
             InitializeComponent();
+            playerlist = new List<Player>();
+        }
 
+        private void InitGame()
+        {
+            gCtx = new GameContext(playerlist);
             PlayerBoxes = new List<PlayerBox>(gCtx.players.Count);
             foreach (var player in gCtx.players)
             {
@@ -97,7 +104,8 @@ namespace WindowsForms
                     AddMessage($"玩家{gCtx.currentPlayer.name}选择了牌{string.Join(",", gCtx.cardDress.ActualCards)}");
                 }));
             };
-            gCtx.OnCannotSelectThisCard += delegate {
+            gCtx.OnCannotSelectThisCard += delegate
+            {
                 InvokeAddMessage($"玩家{gCtx.currentPlayer.name}出一次酸或碱之后就不能再出了");
             };
 
@@ -125,7 +133,8 @@ namespace WindowsForms
                     btnDealCard.Enabled = true;
                 }));
             };
-            gCtx.OnEndDealCard += delegate {
+            gCtx.OnEndDealCard += delegate
+            {
                 this.Invoke(new Action(() =>
                 {
                     AddMessage($"玩家{gCtx.currentPlayer.name}对玩家{string.Join(",", gCtx.targets.Select(t => t.name))}出牌{string.Join(",", gCtx.cardDress.ActualCards)}");
@@ -134,7 +143,8 @@ namespace WindowsForms
                 }));
             };
 
-            gCtx.OnDealCardsFinish += delegate {
+            gCtx.OnDealCardsFinish += delegate
+            {
                 this.Invoke(new Action(() =>
                 {
                     AddMessage($"玩家{gCtx.currentPlayer.name}出牌结束");
@@ -151,7 +161,8 @@ namespace WindowsForms
                     AddMessage($"玩家{gCtx.currentPlayer.name}请弃掉{gCtx.CardsCountToDrop}张牌");
                 }));
             };
-            gCtx.OnEndDropCard += delegate {
+            gCtx.OnEndDropCard += delegate
+            {
                 this.Invoke(new Action(() =>
                 {
                     AddMessage($"玩家{gCtx.currentPlayer.name}弃牌结束");
@@ -160,7 +171,8 @@ namespace WindowsForms
                     Synchronize();
                 }));
             };
-            gCtx.OnCardsDropped += delegate {
+            gCtx.OnCardsDropped += delegate
+            {
                 this.Invoke(new Action(() =>
                 {
                     AddMessage($"玩家{gCtx.currentPlayer.name}弃牌");
@@ -169,7 +181,8 @@ namespace WindowsForms
             };
 
 
-            gCtx.OnGameOver += delegate {
+            gCtx.OnGameOver += delegate
+            {
                 this.Invoke(new Action(() =>
                 {
                     AddMessage($"游戏结束");
@@ -179,14 +192,14 @@ namespace WindowsForms
             };
 
             gCtx.Rules.OnBeginDefend += delegate
-              {
-                  this.Invoke(new Action(() =>
-                  {
-                      panelRespond.Show();
-                      currentTargetListBox.SelectionMode = SelectionMode.One;
-                      AddMessage($"玩家{gCtx.Rules.currentTarget.name}准备出牌应对");
-                  }));
-              };
+            {
+                this.Invoke(new Action(() =>
+                {
+                    panelRespond.Show();
+                    currentTargetListBox.SelectionMode = SelectionMode.One;
+                    AddMessage($"玩家{gCtx.Rules.currentTarget.name}准备出牌应对");
+                }));
+            };
             gCtx.Rules.OnEndDefend += InvokeSynchronize;
             gCtx.Rules.OnEndDefend += delegate
             {
@@ -195,13 +208,16 @@ namespace WindowsForms
                     panelRespond.Hide();
                 }));
             };
-            gCtx.Rules.OnDefendResult += delegate {
+            gCtx.Rules.OnDefendResult += delegate
+            {
                 InvokeAddMessage($"玩家{gCtx.Rules.currentTarget.name}回应了牌{gCtx.Rules.defenderCard}");
             };
-            gCtx.Rules.OnTolerateResult += delegate {
+            gCtx.Rules.OnTolerateResult += delegate
+            {
                 InvokeAddMessage($"玩家{gCtx.Rules.currentTarget.name}没有应对");
             };
-            gCtx.Rules.OnDropBlood+= delegate {
+            gCtx.Rules.OnDropBlood += delegate
+            {
                 InvokeAddMessage($"玩家{gCtx.Rules.currentTarget.name}掉血了");
             };
             gCtx.Rules.OnWrongCard += delegate
@@ -212,6 +228,7 @@ namespace WindowsForms
                 }));
             };
         }
+
         #region 自定义事件
         void CardSelect(object sender, EventArgs e)
         {
@@ -279,6 +296,8 @@ namespace WindowsForms
         #region 按钮事件
         private void btnGameBegin_Click(object sender, EventArgs e)
         {
+            InitGame();
+
             ThreadPool.QueueUserWorkItem(new WaitCallback(WorkMethod));
 
         }

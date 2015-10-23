@@ -9,6 +9,7 @@ namespace GameCore
     public class Player
     {
         public string name;
+        public string ConnectionID;
         /// <summary>
         /// 血，三国杀中的体力
         /// </summary>
