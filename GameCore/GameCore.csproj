@@ -46,8 +46,10 @@
     <Compile Include="Character.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="GameContext.cs" />
+    <Compile Include="KitDeal\ForKit.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="KitDeal\For硅藻土.cs" />
     <Compile Include="TurnContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +58,7 @@
       <Name>YangPeng.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

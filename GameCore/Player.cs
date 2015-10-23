@@ -28,6 +28,8 @@ namespace GameCore
             blood = Math.Min(4, blood + num);
         }
         public List<Card> Cards = new List<Card>();
+        public Card Gear;
+        public Card Armor;
 
         public int CardCountWhenBegin = 4;
         public int CardCountToGet = 2;

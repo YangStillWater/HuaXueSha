@@ -10,5 +10,8 @@ namespace GameCore
     {
         public int AcidDropBloodNum = 1;
         public bool NeedReselect = false;
+        public Type needCardType = null;
+
+        public bool IsFor硅藻土 = false;
     }
 }

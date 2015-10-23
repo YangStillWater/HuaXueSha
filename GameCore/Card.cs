@@ -24,7 +24,7 @@ namespace GameCore
     public abstract class KitCard : Card
     {
         public override bool NeedTarget => true;
-        public override bool NeedResponse => false;
+        public override bool NeedResponse => true;
     }
 
     /// <summary>

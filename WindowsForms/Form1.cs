@@ -65,7 +65,7 @@ namespace WindowsForms
 
         private void InitGame()
         {
-            gCtx = new GameContext(playerlist);
+            gCtx = new GameContext();
             PlayerBoxes = new List<PlayerBox>(gCtx.players.Count);
             foreach (var player in gCtx.players)
             {

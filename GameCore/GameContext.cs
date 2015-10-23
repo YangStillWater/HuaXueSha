@@ -167,7 +167,7 @@ namespace GameCore
             State = GameState.OnSelectCard;
             targets.Clear();
             OnBeginSelectOneCard(this, new EventArgs());
-            if (cardDress!= null || autoEvent.WaitOne(15000))
+            if (cardDress != null || autoEvent.WaitOne(15000))
             {
                 if (isFinishDeal)
                 {
@@ -197,6 +197,10 @@ namespace GameCore
             if (State == GameState.OnSelectCard)
             {
                 autoEvent.Set();
+            }
+            else if (State == GameState.OnRespond)
+            {
+
             }
             else
             {
@@ -263,15 +267,31 @@ namespace GameCore
             {
                 foreach (var c in cardDress.ActualCards)
                 {
-                    currentPlayer.Cards.Remove(c);
-                    droppedCards.Add(c);
-                    dealedCardsInTurn.Add(c);
+                    if (c is GearCard) 
+                    {
+                        currentPlayer.Cards.Remove(c);
+                        currentPlayer.Gear = c;
+                        dealedCardsInTurn.Add(c);
+                    }
+                    else if(c is ArmorCard)
+                    {
+                        currentPlayer.Cards.Remove(c);
+                        currentPlayer.Armor = c;
+                        dealedCardsInTurn.Add(c);
+                    }
+                    else
+                    {
+                        currentPlayer.Cards.Remove(c);
+                        droppedCards.Add(c);
+                        dealedCardsInTurn.Add(c);
+                    }
                 }
                 autoEvent.Set();
             }
         }
         public void Respond()
         {
+            State = GameState.OnRespond;
             Rules.Respond();
         }
 

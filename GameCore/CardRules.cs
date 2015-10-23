@@ -35,23 +35,48 @@ namespace GameCore
             foreach (var t in _gctx.targets)
             {
                 currentTarget = t;
-                OnBeginDefend?.Invoke(this, new EventArgs());
-                if (_gctx.autoEvent.WaitOne(15000) && !IsTolerated)//超时或点击不出牌
-                {
-                    DefendResult();
-                }
-                else
-                {
-                    TolerateResult();
-                }
-                OnEndDefend(this, new EventArgs());
+                RespondOne();
             }
+        }
+
+        public bool RespondOne()
+        {
+            bool isDefended = false;
+            OnBeginDefend?.Invoke(this, new EventArgs());
+            if (_gctx.autoEvent.WaitOne(15000) && !IsTolerated)//超时或点击不出牌
+            {
+                DefendResult();
+                isDefended = true;
+            }
+            else
+            {
+                TolerateResult();
+            }
+            OnEndDefend(this, new EventArgs());
+            return isDefended;
         }
 
         public void Defend(int cardIndex)
         {
             defenderCard = currentTarget.Cards[cardIndex];
-            if (CanDefend(offenderCard, defenderCard))
+            bool canDefend=false;
+            if (_gctx.TurnCtx.IsFor硅藻土 && _gctx.TurnCtx.needCardType == null)
+            {
+                if (defenderCard is Acid || defenderCard is Base)
+                {
+                    canDefend = true;
+                    _gctx.TurnCtx.needCardType = defenderCard.GetType();
+                }
+            }
+            else if (_gctx.TurnCtx.needCardType != null)
+            {
+                canDefend = defenderCard.GetType() == _gctx.TurnCtx.needCardType;
+            }
+            else
+            {
+                canDefend = CanDefend(offenderCard, defenderCard);
+            }
+            if (canDefend)
             {
                 currentTarget.Cards.Remove(defenderCard);
                 _gctx.droppedCards.Add(defenderCard);
@@ -100,15 +125,30 @@ namespace GameCore
             {
                 _gctx.TurnCtx.AcidDropBloodNum = 2;
             }
+            else if (offenderCard is 硅藻土)
+            {
+                if (_gctx.TurnCtx.IsFor硅藻土)
+                {
+                    currentTarget.DropBlood();
+                    OnDropBlood(this, new EventArgs());
+                }
+                else
+                {
+                    new KitDeal.For硅藻土(_gctx).Deal();
+                }
+            }
         }
         public void PlainResult()
         {
-            currentTarget = _gctx.targets.First();
-
-            OnTolerateResult(this, new EventArgs());
-            if (offenderCard is Glucose)
+            if (_gctx.targets.Any())
             {
-                currentTarget.AddBlood();
+                currentTarget = _gctx.targets.First();
+
+                OnTolerateResult(this, new EventArgs());
+                if (offenderCard is Glucose)
+                {
+                    currentTarget.AddBlood();
+                }
             }
         }
         void DefendResult()
